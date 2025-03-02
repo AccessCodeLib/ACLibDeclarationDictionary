@@ -1,0 +1,16 @@
+﻿{
+  "Info": {
+    "Class": "clsDbDocument",
+    "Description": "Database Documents Properties (DAO)"
+  },
+  "Items": {
+    "Databases": {
+      "SummaryInfo": {
+        "Author": "Josef Pötzl",
+        "Comments": "* List of declarations\r\n* Save to / load from table\r\n* Compare and repair letter case",
+        "Company": "access-codelib.net",
+        "Title": "ACLib Declaration Dictionary"
+      }
+    }
+  }
+}

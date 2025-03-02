@@ -1,0 +1,10 @@
+﻿{
+  "Info": {
+    "Class": "clsDbProjProperty",
+    "Description": "Project Properties (Access)"
+  },
+  "Items": {
+    "VCS Build Path": "C:\\Daten\\Projekte\\CodeLib\\ACLibDeclarationDictionary",
+    "VCS Source Path": "\\source"
+  }
+}
