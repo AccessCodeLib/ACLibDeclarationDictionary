@@ -218,7 +218,6 @@ Private Sub AddFromCode(ByVal Code As String, ByVal RegEx As RegExp, ByVal IsPro
    Dim i As Long
 
    For Each Match In RegEx.Execute(Code)
-      If IsProcedure Then Debug.Print Match.Value
       For i = 0 To Match.SubMatches.Count - 1
          AddWordFromDeclaration Match.SubMatches(i), IsProcedure, IsEnumTypeBlock
       Next

@@ -14,10 +14,9 @@ Option Explicit
 
 Dim AccUnitX As Long
 Private m_AccUnitInfo As String
+Public Field As String
 
-Private Enum TestEnum
-   TestEnum_P1 = 2
-End Enum
+Private Enum TestEnum: TestEnum_P1 = 2: End Enum
 Private Type TestType1
    FldA As Long
    FldB As String
@@ -37,8 +36,12 @@ End Type
 
 Public Event RaiseSomething(ByVal EventParam1 As Variant)
 
+Private Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As LongPtr)
+
+Public Event RaiseSomething2(ByVal EventParam1 As Variant, ByVal EventParam2 As Variant)
+
 Private Sub Class_Initialize()
-'
+' Dim Class_Initialize_Xyz as String ... ignored!
 End Sub
 
 Public Function AccUnitTestFunct(ByVal FuncParam1 As Variant, FuncParam2() As String) As Variant
@@ -47,6 +50,8 @@ Public Function AccUnitTestFunct(ByVal FuncParam1 As Variant, FuncParam2() As St
    Dim FuncVar3()
    
    Dim FuncVar4 As Long: FuncVar4 = 5
+   
+   Dim Dim1 As Long: Dim Dim2 As Long
 
 End Function
 
@@ -57,7 +62,12 @@ Friend Property Let Name2(ByVal NewValue As String)
 '
 End Property
 
-Friend Property Set Formatter(ByVal ObjRef As Object)
+Friend Property Set PropertySet(ByVal ObjRef As Object)
 '
 End Property
+
+Private Sub TestMe() ' _
+Private Sub ThisIsOnlyAComment(
+
+End Sub
 

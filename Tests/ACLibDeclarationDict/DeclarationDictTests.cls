@@ -119,26 +119,24 @@ Public Sub ImportCodeModule_CheckKeys()
    Dim ActualDict As Scripting.Dictionary
    
    Dim ExpectedKeys() As Variant
-   ExpectedKeys = Array("AccUnitX", "m_AccUnitInfo", _
+   ExpectedKeys = Array("AccUnitX", "m_AccUnitInfo", "Field", _
                         "TestEnum", "TestEnum_P1", _
                         "TestType1", "FldA", "FldB", "FldC", _
                         "TestEnum2", "TestEnum2_P1", "TestEnum2_P2", _
                         "TestType2", "Fld2A", "Fld2B", _
                         "RaiseSomething", "EventParam1", _
+                        "Sleep", "dwMilliseconds", _
+                        "RaiseSomething2", "EventParam2", _
                         "Class_Initialize", _
-                        "AccUnitTestFunct", "FuncParam1", "FuncParam2", "FuncVar1", "FuncVar2", "FuncVar3", "FuncVar4", _
+                        "AccUnitTestFunct", "FuncParam1", "FuncParam2", "FuncVar1", "FuncVar2", "FuncVar3", "FuncVar4", "Dim1", "Dim2", _
                         "Name1", "Name2", "NewValue", _
-                        "Formatter", "ObjRef")
+                        "PropertySet", "ObjRef", _
+                        "TestMe")
                         
    '
    m_DeclDict.ImportVBComponent CurrentVbProject.VBComponents("DeclarationDictTestCodemodule")
    
    Set ActualDict = m_DeclDict.Dict
-   
-'   Dim k As Long
-'   For k = 0 To m_DeclDict.Count - 1
-'      Debug.Print m_DeclDict.Dict.Keys(k)
-'   Next
    
    Assert.That ActualDict.Count, Iz.EqualTo(UBound(ExpectedKeys) + 1), "Count of items"
    
