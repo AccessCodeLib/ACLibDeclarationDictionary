@@ -20,6 +20,8 @@ Private m_AddInRegPathName As String
 Private m_AddInRegFilePath As String
 Private m_AddInStartFunction As String
 
+Private m_InsertRecordset As DAO.Recordset
+
 Public Property Get FileName() As String
    If Len(m_AddInRegFilePath) > 0 Then
       FileName = Mid(m_AddInRegFilePath, InStrRev(m_AddInRegFilePath, "\", , vbTextCompare) + 1)

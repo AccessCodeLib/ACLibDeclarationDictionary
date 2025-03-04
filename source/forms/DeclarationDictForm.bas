@@ -15,11 +15,11 @@ Begin Form
     GridY =10
     Width =10148
     DatasheetFontHeight =11
-    ItemSuffix =66
-    Left =5529
-    Top =3043
-    Right =19089
-    Bottom =12643
+    ItemSuffix =69
+    Left =9615
+    Top =1545
+    Right =18810
+    Bottom =14775
     OnUnload ="[Event Procedure]"
     RecSrcDt = Begin
         0x1b36415d9252e640
@@ -59,27 +59,27 @@ Begin Form
             Height =283
             FontSize =11
             FontWeight =400
+            ForeColor =4210752
             FontName ="Calibri"
-            ForeThemeColorIndex =0
+            GridlineColor =10921638
             ForeTint =75.0
-            GridlineThemeColorIndex =1
             GridlineShade =65.0
             UseTheme =1
             Shape =1
             Gradient =12
-            BackThemeColorIndex =4
+            BackColor =14136213
             BackTint =60.0
             BorderLineStyle =0
-            BorderThemeColorIndex =4
+            BorderColor =14136213
             BorderTint =60.0
             ThemeFontIndex =1
-            HoverThemeColorIndex =4
+            HoverColor =15060409
             HoverTint =40.0
-            PressedThemeColorIndex =4
+            PressedColor =9592887
             PressedShade =75.0
-            HoverForeThemeColorIndex =0
+            HoverForeColor =4210752
             HoverForeTint =75.0
-            PressedForeThemeColorIndex =0
+            PressedForeColor =4210752
             PressedForeTint =75.0
         End
         Begin OptionButton
@@ -155,9 +155,9 @@ Begin Form
                     IMESentenceMode =3
                     ColumnCount =2
                     Left =60
-                    Top =480
+                    Top =789
                     Width =5416
-                    Height =5136
+                    Height =4827
                     FontSize =9
                     TabIndex =4
                     Name ="lbDictData"
@@ -170,7 +170,7 @@ Begin Form
                     InheritValueList =0
 
                     LayoutCachedLeft =60
-                    LayoutCachedTop =480
+                    LayoutCachedTop =789
                     LayoutCachedWidth =5476
                     LayoutCachedHeight =5616
                 End
@@ -182,9 +182,9 @@ Begin Form
                     Width =5103
                     Height =456
                     TabIndex =1
-                    Name ="ogViewMode"
+                    Name ="filtDiff"
                     AfterUpdate ="[Event Procedure]"
-                    DefaultValue ="0"
+                    DefaultValue ="1"
                     HorizontalAnchor =2
 
                     LayoutCachedLeft =57
@@ -209,7 +209,7 @@ Begin Form
                             OverlapFlags =87
                             Left =1020
                             Top =80
-                            OptionValue =0
+                            OptionValue =1
                             Name ="Option4"
 
                             LayoutCachedLeft =1020
@@ -237,7 +237,7 @@ Begin Form
                             Left =2608
                             Top =80
                             TabIndex =1
-                            OptionValue =1
+                            OptionValue =0
                             Name ="Option6"
 
                             LayoutCachedLeft =2608
@@ -266,10 +266,10 @@ Begin Form
                     RowSourceTypeInt =1
                     OverlapFlags =85
                     IMESentenceMode =3
-                    Left =5666
-                    Top =1903
+                    Left =5670
+                    Top =1905
                     Width =4380
-                    Height =1354
+                    Height =1350
                     TabIndex =7
                     ForeColor =0
                     Name ="lbVariations"
@@ -285,10 +285,10 @@ Begin Form
                     AllowValueListEdits =0
                     InheritValueList =0
 
-                    LayoutCachedLeft =5666
-                    LayoutCachedTop =1903
-                    LayoutCachedWidth =10046
-                    LayoutCachedHeight =3257
+                    LayoutCachedLeft =5670
+                    LayoutCachedTop =1905
+                    LayoutCachedWidth =10050
+                    LayoutCachedHeight =3255
                     RowStart =4
                     RowEnd =4
                     ColumnEnd =1
@@ -302,10 +302,10 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =5666
-                    Top =566
+                    Left =5670
+                    Top =570
                     Width =4380
-                    Height =317
+                    Height =315
                     FontWeight =700
                     TabIndex =5
                     Name ="txtWord"
@@ -321,10 +321,10 @@ Begin Form
                     GroupTable =1
                     HorizontalAnchor =1
 
-                    LayoutCachedLeft =5666
-                    LayoutCachedTop =566
-                    LayoutCachedWidth =10046
-                    LayoutCachedHeight =883
+                    LayoutCachedLeft =5670
+                    LayoutCachedTop =570
+                    LayoutCachedWidth =10050
+                    LayoutCachedHeight =885
                     ColumnEnd =1
                     LayoutGroup =1
                     ConditionalFormat14 = Begin
@@ -336,18 +336,26 @@ Begin Form
                 End
                 Begin CommandButton
                     OverlapFlags =85
-                    Left =5329
-                    Top =56
+                    Left =5494
+                    Top =60
                     Height =328
                     TabIndex =3
                     Name ="cmdUpdateDict"
                     Caption ="update data"
                     OnClick ="[Event Procedure]"
 
-                    LayoutCachedLeft =5329
-                    LayoutCachedTop =56
-                    LayoutCachedWidth =7030
-                    LayoutCachedHeight =384
+                    LayoutCachedLeft =5494
+                    LayoutCachedTop =60
+                    LayoutCachedWidth =7195
+                    LayoutCachedHeight =388
+                    ForeThemeColorIndex =0
+                    GridlineThemeColorIndex =1
+                    BackThemeColorIndex =4
+                    BorderThemeColorIndex =4
+                    HoverThemeColorIndex =4
+                    PressedThemeColorIndex =4
+                    HoverForeThemeColorIndex =0
+                    PressedForeThemeColorIndex =0
                     Overlaps =1
                 End
                 Begin TextBox
@@ -380,6 +388,14 @@ Begin Form
                     Name ="Command15"
                     Caption ="sysFirst"
 
+                    ForeThemeColorIndex =0
+                    GridlineThemeColorIndex =1
+                    BackThemeColorIndex =4
+                    BorderThemeColorIndex =4
+                    HoverThemeColorIndex =4
+                    PressedThemeColorIndex =4
+                    HoverForeThemeColorIndex =0
+                    PressedForeThemeColorIndex =0
                     Overlaps =1
                 End
                 Begin Label
@@ -404,8 +420,8 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =5666
-                    Top =1243
+                    Left =5670
+                    Top =1245
                     Width =4380
                     Height =300
                     TabIndex =6
@@ -428,10 +444,10 @@ Begin Form
                     GridlineWidthBottom =0
                     HorizontalAnchor =1
 
-                    LayoutCachedLeft =5666
-                    LayoutCachedTop =1243
-                    LayoutCachedWidth =10046
-                    LayoutCachedHeight =1543
+                    LayoutCachedLeft =5670
+                    LayoutCachedTop =1245
+                    LayoutCachedWidth =10050
+                    LayoutCachedHeight =1545
                     RowStart =2
                     RowEnd =2
                     ColumnEnd =1
@@ -450,8 +466,8 @@ Begin Form
                 Begin Label
                     OverlapFlags =85
                     TextAlign =1
-                    Left =5666
-                    Top =943
+                    Left =5670
+                    Top =945
                     Width =4380
                     Height =300
                     Name ="Label19"
@@ -459,10 +475,10 @@ Begin Form
                     GroupTable =1
                     BottomPadding =0
                     HorizontalAnchor =1
-                    LayoutCachedLeft =5666
-                    LayoutCachedTop =943
-                    LayoutCachedWidth =10046
-                    LayoutCachedHeight =1243
+                    LayoutCachedLeft =5670
+                    LayoutCachedTop =945
+                    LayoutCachedWidth =10050
+                    LayoutCachedHeight =1245
                     RowStart =1
                     RowEnd =1
                     ColumnEnd =1
@@ -472,8 +488,8 @@ Begin Form
                 Begin Label
                     OverlapFlags =85
                     TextAlign =1
-                    Left =5666
-                    Top =1603
+                    Left =5670
+                    Top =1605
                     Width =4380
                     Height =300
                     Name ="Label20"
@@ -481,10 +497,10 @@ Begin Form
                     GroupTable =1
                     BottomPadding =0
                     HorizontalAnchor =1
-                    LayoutCachedLeft =5666
-                    LayoutCachedTop =1603
-                    LayoutCachedWidth =10046
-                    LayoutCachedHeight =1903
+                    LayoutCachedLeft =5670
+                    LayoutCachedTop =1605
+                    LayoutCachedWidth =10050
+                    LayoutCachedHeight =1905
                     RowStart =3
                     RowEnd =3
                     ColumnEnd =1
@@ -497,10 +513,10 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =5666
-                    Top =3617
-                    Width =3402
-                    Height =351
+                    Left =5670
+                    Top =3615
+                    Width =3405
+                    Height =345
                     TabIndex =8
                     Name ="txtSelectedLetterCase"
                     ControlSource ="=[lbVariations]"
@@ -516,10 +532,10 @@ Begin Form
                     TopPadding =0
                     HorizontalAnchor =1
 
-                    LayoutCachedLeft =5666
-                    LayoutCachedTop =3617
-                    LayoutCachedWidth =9068
-                    LayoutCachedHeight =3968
+                    LayoutCachedLeft =5670
+                    LayoutCachedTop =3615
+                    LayoutCachedWidth =9075
+                    LayoutCachedHeight =3960
                     RowStart =6
                     RowEnd =6
                     LayoutGroup =1
@@ -533,8 +549,8 @@ Begin Form
                 Begin Label
                     OverlapFlags =85
                     TextAlign =1
-                    Left =5666
-                    Top =3283
+                    Left =5670
+                    Top =3285
                     Width =4380
                     Height =300
                     Name ="Label45"
@@ -542,10 +558,10 @@ Begin Form
                     GroupTable =1
                     TopPadding =0
                     HorizontalAnchor =1
-                    LayoutCachedLeft =5666
-                    LayoutCachedTop =3283
-                    LayoutCachedWidth =10046
-                    LayoutCachedHeight =3583
+                    LayoutCachedLeft =5670
+                    LayoutCachedTop =3285
+                    LayoutCachedWidth =10050
+                    LayoutCachedHeight =3585
                     RowStart =5
                     RowEnd =5
                     ColumnEnd =1
@@ -555,10 +571,10 @@ Begin Form
                 Begin CommandButton
                     Enabled = NotDefault
                     OverlapFlags =85
-                    Left =9137
-                    Top =3617
-                    Width =909
-                    Height =351
+                    Left =9135
+                    Top =3615
+                    Width =915
+                    Height =345
                     TabIndex =9
                     Name ="cmdChangeLetterCase"
                     Caption ="Commit"
@@ -567,22 +583,30 @@ Begin Form
                     TopPadding =0
                     HorizontalAnchor =1
 
-                    LayoutCachedLeft =9137
-                    LayoutCachedTop =3617
-                    LayoutCachedWidth =10046
-                    LayoutCachedHeight =3968
+                    LayoutCachedLeft =9135
+                    LayoutCachedTop =3615
+                    LayoutCachedWidth =10050
+                    LayoutCachedHeight =3960
                     RowStart =6
                     RowEnd =6
                     ColumnStart =1
                     ColumnEnd =1
                     LayoutGroup =1
+                    ForeThemeColorIndex =0
+                    GridlineThemeColorIndex =1
+                    BackThemeColorIndex =4
+                    BorderThemeColorIndex =4
+                    HoverThemeColorIndex =4
+                    PressedThemeColorIndex =4
+                    HoverForeThemeColorIndex =0
+                    PressedForeThemeColorIndex =0
                     GroupTable =1
                 End
                 Begin CommandButton
                     OverlapFlags =85
-                    Left =3754
-                    Top =5786
-                    Width =1697
+                    Left =3750
+                    Top =5790
+                    Width =1695
                     Height =300
                     TabIndex =11
                     Name ="cmdSaveToTable"
@@ -590,20 +614,28 @@ Begin Form
                     OnClick ="[Event Procedure]"
                     GroupTable =2
 
-                    LayoutCachedLeft =3754
-                    LayoutCachedTop =5786
-                    LayoutCachedWidth =5451
-                    LayoutCachedHeight =6086
+                    LayoutCachedLeft =3750
+                    LayoutCachedTop =5790
+                    LayoutCachedWidth =5445
+                    LayoutCachedHeight =6090
                     ColumnStart =2
                     ColumnEnd =2
                     LayoutGroup =2
+                    ForeThemeColorIndex =0
+                    GridlineThemeColorIndex =1
+                    BackThemeColorIndex =4
+                    BorderThemeColorIndex =4
+                    HoverThemeColorIndex =4
+                    PressedThemeColorIndex =4
+                    HoverForeThemeColorIndex =0
+                    PressedForeThemeColorIndex =0
                     GroupTable =2
                 End
                 Begin CommandButton
                     OverlapFlags =85
-                    Left =1997
-                    Top =5786
-                    Width =1697
+                    Left =1995
+                    Top =5790
+                    Width =1695
                     Height =300
                     TabIndex =10
                     Name ="cmdLoadFromTable"
@@ -611,29 +643,37 @@ Begin Form
                     OnClick ="[Event Procedure]"
                     GroupTable =2
 
-                    LayoutCachedLeft =1997
-                    LayoutCachedTop =5786
-                    LayoutCachedWidth =3694
-                    LayoutCachedHeight =6086
+                    LayoutCachedLeft =1995
+                    LayoutCachedTop =5790
+                    LayoutCachedWidth =3690
+                    LayoutCachedHeight =6090
                     ColumnStart =1
                     ColumnEnd =1
                     LayoutGroup =2
+                    ForeThemeColorIndex =0
+                    GridlineThemeColorIndex =1
+                    BackThemeColorIndex =4
+                    BorderThemeColorIndex =4
+                    HoverThemeColorIndex =4
+                    PressedThemeColorIndex =4
+                    HoverForeThemeColorIndex =0
+                    PressedForeThemeColorIndex =0
                     GroupTable =2
                     Begin
                         Begin Label
                             OverlapFlags =85
                             TextAlign =1
                             Left =60
-                            Top =5786
+                            Top =5790
                             Width =1871
                             Height =300
                             Name ="Label56"
                             Caption ="Table: USysDeclDict"
                             GroupTable =2
                             LayoutCachedLeft =60
-                            LayoutCachedTop =5786
+                            LayoutCachedTop =5790
                             LayoutCachedWidth =1931
-                            LayoutCachedHeight =6086
+                            LayoutCachedHeight =6090
                             LayoutGroup =2
                             GroupTable =2
                         End
@@ -669,6 +709,64 @@ Begin Form
                     LayoutCachedTop =5897
                     LayoutCachedWidth =10044
                     LayoutCachedHeight =6120
+                End
+                Begin TextBox
+                    OverlapFlags =87
+                    IMESentenceMode =3
+                    Left =720
+                    Top =446
+                    Width =3073
+                    Height =300
+                    TabIndex =12
+                    Name ="filtWord"
+                    AfterUpdate ="[Event Procedure]"
+
+                    LayoutCachedLeft =720
+                    LayoutCachedTop =446
+                    LayoutCachedWidth =3793
+                    LayoutCachedHeight =746
+                    Begin
+                        Begin Label
+                            OverlapFlags =95
+                            Left =60
+                            Top =446
+                            Width =660
+                            Height =300
+                            Name ="Label67"
+                            Caption ="Filter:"
+                            LayoutCachedLeft =60
+                            LayoutCachedTop =446
+                            LayoutCachedWidth =720
+                            LayoutCachedHeight =746
+                        End
+                    End
+                End
+                Begin CommandButton
+                    OverlapFlags =215
+                    Left =3981
+                    Top =429
+                    Width =1495
+                    Height =328
+                    TabIndex =13
+                    Name ="cmdRemoveFilter"
+                    Caption ="remove filter"
+                    OnClick ="[Event Procedure]"
+                    BackStyle =0
+
+                    LayoutCachedLeft =3981
+                    LayoutCachedTop =429
+                    LayoutCachedWidth =5476
+                    LayoutCachedHeight =757
+                    ForeThemeColorIndex =0
+                    GridlineThemeColorIndex =1
+                    Gradient =0
+                    BackThemeColorIndex =4
+                    BorderThemeColorIndex =4
+                    HoverThemeColorIndex =4
+                    PressedThemeColorIndex =4
+                    HoverForeThemeColorIndex =0
+                    PressedForeThemeColorIndex =0
+                    Overlaps =1
                 End
             End
         End

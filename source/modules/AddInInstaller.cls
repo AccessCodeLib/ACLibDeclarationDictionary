@@ -10,10 +10,6 @@ Attribute VB_Exposed = False
 Option Compare Database
 Option Explicit
 
-'Const AddInName = "ACLib-AccUnit-Loader"
-'Const AddInFileName = "AccUnitLoader.accda"
-'Const MsgBoxTitle = "Install ACLib-AccUnit-Loader"
-
 Private m_ConfigData As AddInConfiguration
 
 Public Function InstallAddIn(ByVal AddInConfigData As AddInConfiguration, _

@@ -5,14 +5,29 @@ Attribute VB_Exposed = False
 Option Compare Database
 Option Explicit
 
-Private m_DeclarationDict As DeclarationDict
+Private WithEvents m_DeclarationDict As DeclarationDict
+
+Private m_InsertRecordset As DAO.Recordset
 
 Private Sub cmdLoadFromTable_Click()
    LoadFromTable
 End Sub
 
+Private Sub cmdRemoveFilter_Click()
+   Me.filtWord.Value = Null
+   RequeryDictData
+End Sub
+
 Private Sub cmdSaveToTable_Click()
    SaveToTable
+End Sub
+
+Private Sub filtDiff_AfterUpdate()
+   RequeryDictData
+End Sub
+
+Private Sub filtWord_AfterUpdate()
+   RequeryDictData
 End Sub
 
 Private Sub Form_Load()
@@ -42,7 +57,11 @@ End Sub
 
 Private Sub cmdUpdateDict_Click()
    m_DeclarationDict.ImportVBProject CurrentVbProject
-   RefreshList
+   If Not (m_InsertRecordset Is Nothing) Then
+      m_InsertRecordset.Close
+      Set m_InsertRecordset = Nothing
+   End If
+   RequeryDictData
 End Sub
 
 Private Sub lbDictData_AfterUpdate()
@@ -53,49 +72,104 @@ Private Sub lbVariations_AfterUpdate()
    SetVariationCommitMode
 End Sub
 
+Private Sub m_DeclarationDict_WordChanged(ByVal WordKey As String)
+
+   Static db As DAO.Database
+   If db Is Nothing Then
+      Set db = CodeDb
+   End If
+
+   Dim UpdateSql As String
+   UpdateSql = "Update tabWords set Word=" & SqlTools.TextToSqlText(WordKey)
+   If m_DeclarationDict.Dict.Item(WordKey).Count > 1 Then
+      UpdateSql = UpdateSql & ", Variants =" & SqlTools.TextToSqlText(Join(m_DeclarationDict.GetWordVariants(WordKey, True), "|"))
+   End If
+   UpdateSql = UpdateSql & ", Diff=" & SqlTools.BooleanToSqlText(m_DeclarationDict.IsWordWithChangedLetterCase(WordKey))
+
+   UpdateSql = UpdateSql & " where Word=" & SqlTools.TextToSqlText(WordKey)
+
+   db.Execute UpdateSql, dbFailOnError
+
+End Sub
+
+Private Sub m_DeclarationDict_WordInserted(ByVal WordKey As String)
+
+   If m_InsertRecordset Is Nothing Then
+      Set m_InsertRecordset = CodeDb.OpenRecordset("tabWords", dbOpenDynaset, dbAppendOnly)
+   End If
+
+   m_InsertRecordset.AddNew
+   m_InsertRecordset.Fields(0).Value = WordKey
+   If m_DeclarationDict.Dict.Item(WordKey).Count > 1 Then
+      m_InsertRecordset.Fields(1).Value = Join(m_DeclarationDict.GetWordVariants(WordKey, True), "|")
+   End If
+   m_InsertRecordset.Fields(2).Value = m_DeclarationDict.IsWordWithChangedLetterCase(WordKey)
+   m_InsertRecordset.Update
+
+End Sub
+
 Private Sub ogViewMode_AfterUpdate()
-   RefreshList
-End Sub
-
-Private Sub RefreshList()
-
-   CodeDb.Execute "delete from tabWords"
-   Me.lbDictData.Requery
-
-   Dim rs As DAO.Recordset
-   Set rs = CodeDb.OpenRecordset("tabWords", dbOpenDynaset, dbAppendOnly)
-
-   Dim listDict As Scripting.Dictionary
-   Set listDict = m_DeclarationDict.ToDict(CBool(Me.ogViewMode.Value))
-
-   Dim DictIndex As Long
-   Dim DictKey As String
-
-   For DictIndex = 0 To listDict.Count - 1
-
-      DictKey = listDict.Keys(DictIndex)
-
-      rs.AddNew
-      rs.Fields(0).Value = DictKey
-      rs.Fields(1).Value = listDict.Item(DictKey)
-      rs.Update
-
-   Next
-
    RequeryDictData
-
 End Sub
+
+'Private Sub FillWordTable()
+'
+'   CodeDb.Execute "delete from tabWords"
+'   Me.lbDictData.Requery
+'
+'   Dim rs As DAO.Recordset
+'   Set rs = CodeDb.OpenRecordset("tabWords", dbOpenDynaset, dbAppendOnly)
+'
+'   Dim listDict As Scripting.Dictionary
+'   Set listDict = m_DeclarationDict.ToDict(CBool(Me.ogViewMode.Value))
+'
+'   Dim DictIndex As Long
+'   Dim DictKey As String
+'
+'   For DictIndex = 0 To listDict.Count - 1
+'
+'      DictKey = listDict.Keys(DictIndex)
+'
+'      rs.AddNew
+'      rs.Fields(0).Value = DictKey
+'      rs.Fields(1).Value = listDict.Item(DictKey)
+'      rs.Fields(2).Value = listDict.Item(DictKey)
+'      rs.Update
+'
+'   Next
+'
+'   RequeryDictData
+'
+'End Sub
 
 Private Sub RequeryDictData()
 
    ResetVariations
 
+   Dim SelectSql As String
+   Dim CriteriaString As String
+   Dim rs As DAO.Recordset
+
+   SelectSql = "SELECT W.Word, W.Variations FROM tabWords AS W"
+
+   With New FilterStringBuilder
+      .ConfigSqlFormat "\#yyyy-mm-dd\#", "True", "*"
+      .Add "Diff", SQL_Boolean, SQL_Equal, CBool(Me.filtDiff.Value), , False
+      .Add "Word", SQL_Text, SQL_Like, Me.filtWord.Value
+      CriteriaString = .ToString()
+   End With
+   If Len(CriteriaString) > 0 Then
+      SelectSql = SelectSql & " WHERE " & CriteriaString
+   End If
+
+   SelectSql = SelectSql & " ORDER BY W.Word;"
+
    Me.txtCurrentLetterCase.Value = Null
    Me.lbDictData.Value = Null
    With Me.lbDictData
       .Value = Null
-      If Len(.RowSource) = 0 Then
-         .RowSource = "SELECT W.Word, W.Variations FROM tabWords AS W ORDER BY W.Word;"
+      If .RowSource <> SelectSql Then
+         .RowSource = SelectSql
       Else
          .Requery
       End If
@@ -261,7 +335,7 @@ Private Sub LoadFromTable()
    Set db = Nothing
 
    ShowTableRecInfo m_DeclarationDict.Count & " records were imported from USysDeclDict"
-   RefreshList
+   RequeryDictData
 
 End Sub
 

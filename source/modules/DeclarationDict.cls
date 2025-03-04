@@ -13,6 +13,9 @@ Option Explicit
 Private m_Words As Scripting.Dictionary
 Private m_DiffCnt As Long
 
+Public Event WordInserted(ByVal WordKey As String)
+Public Event WordChanged(ByVal WordKey As String)
+
 Private Sub Class_Initialize()
    Set m_Words = GetNewDict(TextCompare)
    m_DiffCnt = -1
@@ -57,6 +60,12 @@ Private Function GetDiffCnt() As Long
 
 End Function
 
+Public Function IsWordWithChangedLetterCase(ByVal Word As String) As Boolean
+
+   IsWordWithChangedLetterCase = IsChangedItem(Word, m_Words.Item(Word))
+
+End Function
+
 Private Function IsChangedItem(ByVal Word As String, ByVal SubDict As Scripting.Dictionary) As Boolean
 
    Dim LastKey As String
@@ -78,23 +87,34 @@ Public Sub AddWord(ByVal Word As String)
 
    Dim SubDict As Scripting.Dictionary
    Dim LastKey As String
+   Dim RaiseInsert As Boolean
+   Dim RaiseChanged As Boolean
 
    If Not m_Words.Exists(Word) Then
       m_Words.Add Word, GetNewDict(BinaryCompare)
+      RaiseInsert = True
    End If
 
    Set SubDict = m_Words.Item(Word)
    With SubDict
       If Not .Exists(Word) Then
          .Add Word, Word
+         RaiseChanged = True
       ElseIf .Count > 1 Then
          LastKey = .Keys(.Count - 1)
          If StrComp(LastKey, Word, vbBinaryCompare) <> 0 Then
             .Remove Word
             .Add Word, Word
          End If
+         RaiseChanged = True
       End If
    End With
+
+   If RaiseInsert Then
+      RaiseEvent WordInserted(Word)
+   ElseIf RaiseChanged Then
+      RaiseEvent WordChanged(Word)
+   End If
 
 End Sub
 
@@ -119,72 +139,99 @@ End Sub
 Public Sub ImportCode(ByVal Code As String)
 
    Dim RegEx As RegExp
-   Set RegEx = New RegExp
+   Set RegEx = NewRegExp
+
+   Code = PrepareCode(Code, RegEx)
+
+   Dim Patterns(2) As String
+   Const ProcIndex As Long = 0
+   Const EnumTypeIndex As Long = 1
+
+   Patterns(ProcIndex) = "(?:\r|\n|^)\s*(?:Sub|Function|Property Get|Property Let)\s+(.*)\s*"
+   Patterns(EnumTypeIndex) = "(?:\r|\n|^)\s*(?:Enum|Type)([\s\S]*?)(?:End\s+(?:Enum|Type))"
+   Patterns(2) = "(?:\r|\n|^)\s*(?:Dim|Private|Friend|Public|Const)\s+(.*)"
 
    Dim i As Long
-   Dim IsProcedure As Boolean
-
-   Code = Replace(Code, " _" & vbNewLine, " ")
-
-   RegEx.IgnoreCase = True
-   RegEx.Global = True
-
-   RegEx.Pattern = """[^""\r\n]*"""
-   Code = RegEx.Replace(Code, "")
-
-   RegEx.Pattern = "'(.*)[\r\n]"
-   Code = RegEx.Replace(Code, "")
-
-   RegEx.Pattern = "(?:Declare PtrSafe)\s(Function|Sub)\s"
-   Code = RegEx.Replace(Code, "Declare $1 ")
-
-   RegEx.Pattern = "(Declare)\s(Function|Sub)\s(.*)Alias\s*[(]"
-   Code = RegEx.Replace(Code, "$1 $2 $3(")
-
-   RegEx.Pattern = "(?:Declare)\s(Function|Sub)\s(.*)Lib\s*[(]"
-   Code = RegEx.Replace(Code, "$1 $2(")
-
-   RegEx.Pattern = "(?:Public|Private|Friend)\s(Function|Sub|Property|Enum|Const)\s"
-   Code = RegEx.Replace(Code, "$1 ")
-
-   Dim Patterns(1) As String
-   Patterns(0) = "(?:\r|\n)\s*(?:Sub|Function|Property Get|Property Let)\s+(.*)\s*"
-   Patterns(1) = "(?:\r|\n)\s*(?:Dim|Private|Friend|Public|Const|Enum)\s+(.*)"
-
    For i = 0 To UBound(Patterns)
       RegEx.Pattern = Patterns(i)
-      AddFromCode Code, RegEx, i = 0
+      AddFromCode Code, RegEx, i = ProcIndex, i = EnumTypeIndex
    Next
 
 End Sub
 
-Private Sub AddFromCode(ByVal Code As String, ByVal RegEx As RegExp, ByVal IsProcedure As Boolean)
+Private Function NewRegExp() As RegExp
+
+   Dim RegEx As RegExp
+
+   Set RegEx = New RegExp
+   RegEx.IgnoreCase = True
+   RegEx.Global = True
+
+   Set NewRegExp = RegEx
+
+End Function
+
+Private Function PrepareCode(ByVal Code As String, ByVal RegEx As RegExp) As String
+
+   Code = Replace(Code, " _" & vbNewLine, " ")
+
+   With RegEx
+
+      .Pattern = """[^""\r\n]*"""
+      Code = .Replace(Code, "")
+
+      .Pattern = "'(.*)[\r\n]"
+      Code = .Replace(Code, "")
+
+      .Pattern = "(?:Declare PtrSafe)\s(Function|Sub)\s"
+      Code = .Replace(Code, "Declare $1 ")
+
+      .Pattern = "(Declare)\s(Function|Sub)\s(.*)Alias\s*[(]"
+      Code = .Replace(Code, "$1 $2 $3(")
+
+      .Pattern = "(?:Declare)\s(Function|Sub)\s(.*)Lib\s*[(]"
+      Code = .Replace(Code, "$1 $2(")
+
+      .Pattern = "(?:Public|Private|Friend)\s(Function|Sub|Property|Enum|Type|Const)\s"
+      Code = .Replace(Code, "$1 ")
+
+   End With
+
+   PrepareCode = Code
+
+End Function
+
+Private Sub AddFromCode(ByVal Code As String, ByVal RegEx As RegExp, ByVal IsProcedure As Boolean, ByVal IsEnumTypeBlock As Boolean)
 
    Dim Match As Match
    Dim i As Long
 
    For Each Match In RegEx.Execute(Code)
       For i = 0 To Match.SubMatches.Count - 1
-         AddWordFromDeclaration Match.SubMatches(i), IsProcedure
+         AddWordFromDeclaration Match.SubMatches(i), IsProcedure, IsEnumTypeBlock
       Next
    Next
 
 End Sub
 
-Private Sub AddWordFromDeclaration(ByRef Declarations As String, ByVal IsProcedure As Boolean)
+Private Sub AddWordFromDeclaration(ByRef Declarations As String, ByVal IsProcedure As Boolean, ByVal IsEnumTypeBlock As Boolean)
 
    Dim Word As String
    Dim i As Long
    Dim Pos As Long
    Dim PosX As Long
 
-   'Stop
-   'Debug.Print Declarations, IsProcedure
-
    Dim DeclArray() As String
 
-   Declarations = Replace(Declarations, vbCr, vbNullString)
-   Declarations = Replace(Declarations, vbLf, vbNullString)
+   If IsEnumTypeBlock Then
+      Declarations = Replace(Declarations, vbCr, ",")
+      Declarations = Replace(Declarations, vbLf, vbNullString)
+      Debug.Print Declarations
+   Else
+      Declarations = Replace(Declarations, vbCr, vbNullString)
+      Declarations = Replace(Declarations, vbLf, vbNullString)
+   End If
+
    Declarations = Trim(Declarations)
 
    If IsProcedure Then
@@ -198,7 +245,13 @@ Private Sub AddWordFromDeclaration(ByRef Declarations As String, ByVal IsProcedu
          Mid(Declarations, Pos, 1) = ","
       End If
       Declarations = Replace(Declarations, ")", vbNullString)
+   ElseIf IsEnumTypeBlock Then
+      Debug.Print Declarations
    End If
+
+   Do While InStr(1, Declarations, "  ") > 0
+      Declarations = Replace(Declarations, "  ", " ")
+   Loop
 
    DeclArray = Split(Trim(Declarations), ",")
 
@@ -206,9 +259,11 @@ Private Sub AddWordFromDeclaration(ByRef Declarations As String, ByVal IsProcedu
       Word = Trim(DeclArray(i))
       Pos = CutPos(Word)
       If Pos > 1 Then
-         Word = Left(Word, Pos - 1)
+         Word = Trim(Left(Word, Pos - 1))
       End If
-      AddWord Word
+      If Len(Word) > 0 Then
+         AddWord Word
+      End If
    Next
 
 End Sub
@@ -301,7 +356,6 @@ Private Function GetWordVariantsOutputString(ByVal Word As String, Optional ByVa
    GetWordVariantsOutputString = Join(GetWordVariants(Word, IgnoreOriginalWord), "|")
 
 End Function
-
 
 Public Function GetWordVariants(ByVal Word As String, Optional ByVal IgnoreOriginalWord As Boolean = False) As String()
 
