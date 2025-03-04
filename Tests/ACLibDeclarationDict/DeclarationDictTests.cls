@@ -37,6 +37,7 @@ End Sub
 'AccUnit:Row("Dim Abc", "Abc")
 'AccUnit:Row("Dim Abc() As String", "Abc")
 'AccUnit:Row("Dim Abc()", "Abc")
+'AccUnit:Row("ReDim Abc(5)", "Abc")
 'AccUnit:Row("Private Abc As String", "Abc")
 'AccUnit:Row("Private Abc", "Abc")
 'AccUnit:Row("Private Abc() As String", "Abc")
@@ -157,7 +158,7 @@ Public Sub ImportClassCodeModule_CheckKeys()
                         "PropertySet", "ObjRef", _
                         "TestMe", _
                         "VariableParams", "Args", _
-                        "MyStaticSub", "Counter2")
+                        "MyStaticSub", "Reset", "Counter2")
     
    
    m_DeclDict.ImportVBComponent CurrentVbProject.VBComponents("DeclarationDictTestCodemodule")

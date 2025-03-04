@@ -80,6 +80,6 @@ Public Sub VariableParams(ParamArray Args() As Variant)
 '
 End Sub
 
-Private Static Sub MyStaticSub()
+Private Static Sub MyStaticSub(Optional ByVal Reset As Boolean = False)
     Static Counter2 As Integer
 End Sub
