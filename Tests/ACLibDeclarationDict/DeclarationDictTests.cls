@@ -31,7 +31,7 @@ End Sub
 
 'AccUnit:Row("Public Function Func1() As String", "Func1")
 'AccUnit:Row("Private Function Func1() As String", "Func1")
-'AccUnit:Row("Private Function Func1() As String()", "Func1")
+'AccUnit:Row("Friend Function Func1() As String()", "Func1")
 'AccUnit:Row("Function Func1()", "Func1")
 'AccUnit:Row("Dim Abc As String", "Abc")
 'AccUnit:Row("Dim Abc", "Abc")
@@ -41,6 +41,8 @@ End Sub
 'AccUnit:Row("Private Abc", "Abc")
 'AccUnit:Row("Private Abc() As String", "Abc")
 'AccUnit:Row("Private Abc()", "Abc")
+'AccUnit:Row("Public Abc", "Abc")
+'AccUnit:Row("Global Abc", "Abc")
 'AccUnit:Row("Private Function Func1(a, b) As String()", "Func1|a|b")
 'AccUnit:Row("Private Function Func1(a(), b) As String()", "Func1|a|b")
 'AccUnit:Row("Private Function Func1(a(), b()) As String()", "Func1|a|b")
@@ -49,7 +51,7 @@ End Sub
 Public Sub ImportCode_InsertCodeLine_CheckKeysExists(ByVal Code As String, ByVal Expected As String)
   
    Dim Actual As String
-      
+   
    m_DeclDict.ImportCode Code
    Actual = Join(m_DeclDict.Dict.Keys, "|")
    
@@ -65,6 +67,27 @@ Public Sub ImportCode_InsertCodeLines_CheckKeysExists(ByVal Code As String, ByVa
    
    Debug.Print Code
       
+   m_DeclDict.ImportCode Code
+   Actual = Join(m_DeclDict.Dict.Keys, "|")
+   
+   Assert.That Actual, Iz.EqualTo(Expected)
+   
+End Sub
+
+'AccUnit:Row("Private Declare PtrSafe Sub Sleep Lib ""kernel32"" (ByVal dwMilliseconds As LongPtr)", "Sleep|dwMilliseconds")
+'AccUnit:Row("Private Declare PtrSafe Function CopyMemory Lib ""kernel32"" Alias ""RtlMoveMemory""(ByRef Destination As Any, ByRef Source As Any, ByVal Length As Long) As Long", "CopyMemory|Destination|Source|Length")
+Public Sub ImportCode_API_CheckKeysExists(ByVal Code As String, ByVal Expected As String)
+  
+   Dim Actual As String
+'
+'   Dim RegEx As RegExp
+'   Set RegEx = New RegExp
+'
+'   RegEx.IgnoreCase = True
+'   RegEx.Global = True
+'   RegEx.Pattern = "(?:Declare)\s(Function|Sub)\s([^ ]*)[^(]*\("
+'   Actual = RegEx.Replace(Code, "$1 $2(")
+   
    m_DeclDict.ImportCode Code
    Actual = Join(m_DeclDict.Dict.Keys, "|")
    
@@ -114,32 +137,34 @@ Public Sub ImportCode_TypeCode_CheckKeys()
 
 End Sub
 
-Public Sub ImportCodeModule_CheckKeys()
+Public Sub ImportClassCodeModule_CheckKeys()
 
    Dim ActualDict As Scripting.Dictionary
    
    Dim ExpectedKeys() As Variant
-   ExpectedKeys = Array("AccUnitX", "m_AccUnitInfo", "Field", _
+   ExpectedKeys = Array("AccUnitX", "m_AccUnitInfo", "Field", "Const1", _
                         "TestEnum", "TestEnum_P1", _
                         "TestType1", "FldA", "FldB", "FldC", _
                         "TestEnum2", "TestEnum2_P1", "TestEnum2_P2", _
                         "TestType2", "Fld2A", "Fld2B", _
                         "RaiseSomething", "EventParam1", _
                         "Sleep", "dwMilliseconds", _
+                        "CopyMemory", "Destination", "Source", "Length", _
                         "RaiseSomething2", "EventParam2", _
                         "Class_Initialize", _
                         "AccUnitTestFunct", "FuncParam1", "FuncParam2", "FuncVar1", "FuncVar2", "FuncVar3", "FuncVar4", "Dim1", "Dim2", _
                         "Name1", "Name2", "NewValue", _
                         "PropertySet", "ObjRef", _
-                        "TestMe")
-                        
-   '
+                        "TestMe", _
+                        "VariableParams", "Args", _
+                        "MyStaticSub", "Counter2")
+    
+   
    m_DeclDict.ImportVBComponent CurrentVbProject.VBComponents("DeclarationDictTestCodemodule")
    
    Set ActualDict = m_DeclDict.Dict
-   
+
    Assert.That ActualDict.Count, Iz.EqualTo(UBound(ExpectedKeys) + 1), "Count of items"
-   
    
    Dim i As Long
    For i = 0 To UBound(ExpectedKeys)

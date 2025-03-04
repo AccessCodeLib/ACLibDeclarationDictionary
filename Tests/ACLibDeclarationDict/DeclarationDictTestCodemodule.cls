@@ -16,6 +16,8 @@ Dim AccUnitX As Long
 Private m_AccUnitInfo As String
 Public Field As String
 
+Private Const Const1 As String = "abc"
+
 Private Enum TestEnum: TestEnum_P1 = 2: End Enum
 Private Type TestType1
    FldA As Long
@@ -37,6 +39,9 @@ End Type
 Public Event RaiseSomething(ByVal EventParam1 As Variant)
 
 Private Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As LongPtr)
+
+Private Declare PtrSafe Function CopyMemory Lib "kernel32" Alias "RtlMoveMemory" _
+    (ByRef Destination As Any, ByRef Source As Any, ByVal Length As Long) As Long
 
 Public Event RaiseSomething2(ByVal EventParam1 As Variant, ByVal EventParam2 As Variant)
 
@@ -71,3 +76,10 @@ Private Sub ThisIsOnlyAComment(
 
 End Sub
 
+Public Sub VariableParams(ParamArray Args() As Variant)
+'
+End Sub
+
+Private Static Sub MyStaticSub()
+    Static Counter2 As Integer
+End Sub
