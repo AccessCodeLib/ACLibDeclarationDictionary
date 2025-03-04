@@ -143,18 +143,21 @@ Public Sub ImportCode(ByVal Code As String)
 
    Code = PrepareCode(Code, RegEx)
 
-   Dim Patterns(2) As String
    Const ProcIndex As Long = 0
-   Const EnumTypeIndex As Long = 1
+   Const EventIndex As Long = 1
+   Const EnumTypeIndex As Long = 2
 
-   Patterns(ProcIndex) = "(?:\r|\n|^)\s*(?:Sub|Function|Property Get|Property Let)\s+(.*)\s*"
+   Dim Patterns(3) As String
+
+   Patterns(ProcIndex) = "(?:\r|\n|^)\s*(?:Sub|Function|Property Get|Property Let|Property Set)\s+(.*)\s*"
+   Patterns(EventIndex) = "(?:\r|\n|^)\s*(?:Event)\s+(.*)\s*"
    Patterns(EnumTypeIndex) = "(?:\r|\n|^)\s*(?:Enum|Type)([\s\S]*?)(?:End\s+(?:Enum|Type))"
-   Patterns(2) = "(?:\r|\n|^)\s*(?:Dim|Private|Friend|Public|Const)\s+(.*)"
+   Patterns(3) = "(?:\r|\n|^)\s*(?:Dim|Private|Friend|Public|Const)\s+(.*)"
 
    Dim i As Long
    For i = 0 To UBound(Patterns)
       RegEx.Pattern = Patterns(i)
-      AddFromCode Code, RegEx, i = ProcIndex, i = EnumTypeIndex
+      AddFromCode Code, RegEx, i = ProcIndex Or i = EventIndex, i = EnumTypeIndex
    Next
 
 End Sub
@@ -177,12 +180,19 @@ Private Function PrepareCode(ByVal Code As String, ByVal RegEx As RegExp) As Str
 
    With RegEx
 
+      ' clear all strings
       .Pattern = """[^""\r\n]*"""
       Code = .Replace(Code, "")
 
+      ' remove comments
       .Pattern = "'(.*)[\r\n]"
       Code = .Replace(Code, "")
 
+      ' dim a as String: a = 5  => insert line break
+      .Pattern = "(\:\s)"
+      Code = .Replace(Code, vbNewLine)
+
+      ' API declaration => rename to normal procedure declaration
       .Pattern = "(?:Declare PtrSafe)\s(Function|Sub)\s"
       Code = .Replace(Code, "Declare $1 ")
 
@@ -192,7 +202,8 @@ Private Function PrepareCode(ByVal Code As String, ByVal RegEx As RegExp) As Str
       .Pattern = "(?:Declare)\s(Function|Sub)\s(.*)Lib\s*[(]"
       Code = .Replace(Code, "$1 $2(")
 
-      .Pattern = "(?:Public|Private|Friend)\s(Function|Sub|Property|Enum|Type|Const)\s"
+      ' remove Public, Private, Friend before Function, Sub, Property, ..
+      .Pattern = "(?:Public|Private|Friend)\s(Function|Sub|Property|Event|Enum|Type|Const)\s"
       Code = .Replace(Code, "$1 ")
 
    End With
@@ -207,6 +218,7 @@ Private Sub AddFromCode(ByVal Code As String, ByVal RegEx As RegExp, ByVal IsPro
    Dim i As Long
 
    For Each Match In RegEx.Execute(Code)
+      If IsProcedure Then Debug.Print Match.Value
       For i = 0 To Match.SubMatches.Count - 1
          AddWordFromDeclaration Match.SubMatches(i), IsProcedure, IsEnumTypeBlock
       Next
@@ -226,7 +238,6 @@ Private Sub AddWordFromDeclaration(ByRef Declarations As String, ByVal IsProcedu
    If IsEnumTypeBlock Then
       Declarations = Replace(Declarations, vbCr, ",")
       Declarations = Replace(Declarations, vbLf, vbNullString)
-      Debug.Print Declarations
    Else
       Declarations = Replace(Declarations, vbCr, vbNullString)
       Declarations = Replace(Declarations, vbLf, vbNullString)
@@ -235,6 +246,7 @@ Private Sub AddWordFromDeclaration(ByRef Declarations As String, ByVal IsProcedu
    Declarations = Trim(Declarations)
 
    If IsProcedure Then
+     ' Debug.Print Declarations
       Declarations = Replace(Declarations, "()", vbNullString)
       Declarations = Replace(Declarations, "Optional ", vbNullString)
       Declarations = Replace(Declarations, "ByRef ", vbNullString)
@@ -246,7 +258,7 @@ Private Sub AddWordFromDeclaration(ByRef Declarations As String, ByVal IsProcedu
       End If
       Declarations = Replace(Declarations, ")", vbNullString)
    ElseIf IsEnumTypeBlock Then
-      Debug.Print Declarations
+   '   Debug.Print Declarations
    End If
 
    Do While InStr(1, Declarations, "  ") > 0

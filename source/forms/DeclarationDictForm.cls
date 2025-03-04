@@ -6,6 +6,7 @@ Option Compare Database
 Option Explicit
 
 Private WithEvents m_DeclarationDict As DeclarationDict
+Attribute m_DeclarationDict.VB_VarHelpID = -1
 
 Private m_InsertRecordset As DAO.Recordset
 

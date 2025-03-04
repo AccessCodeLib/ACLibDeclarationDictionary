@@ -45,6 +45,7 @@ End Sub
 'AccUnit:Row("Private Function Func1(a(), b) As String()", "Func1|a|b")
 'AccUnit:Row("Private Function Func1(a(), b()) As String()", "Func1|a|b")
 'AccUnit:Row("Dim Abc() As String, b(), C As Long", "Abc|b|C")
+'AccUnit:Row("Function Abc(ByVal X as Long) as Long: Abc = X*X: End Function", "Abc|X")
 Public Sub ImportCode_InsertCodeLine_CheckKeysExists(ByVal Code As String, ByVal Expected As String)
   
    Dim Actual As String
@@ -120,17 +121,27 @@ Public Sub ImportCodeModule_CheckKeys()
    Dim ExpectedKeys() As Variant
    ExpectedKeys = Array("AccUnitX", "m_AccUnitInfo", _
                         "TestEnum", "TestEnum_P1", _
-                        "TypTest1", "FldA", "FldB", _
+                        "TestType1", "FldA", "FldB", "FldC", _
                         "TestEnum2", "TestEnum2_P1", "TestEnum2_P2", _
-                        "TypTest2", "Fld2A", "Fld2B", _
+                        "TestType2", "Fld2A", "Fld2B", _
+                        "RaiseSomething", "EventParam1", _
                         "Class_Initialize", _
-                        "AccUnitTestFunct", "FuncParam1", "FuncParam2", "FuncVar1", "FuncVar2", "FuncVar3")
-   
+                        "AccUnitTestFunct", "FuncParam1", "FuncParam2", "FuncVar1", "FuncVar2", "FuncVar3", "FuncVar4", _
+                        "Name1", "Name2", "NewValue", _
+                        "Formatter", "ObjRef")
+                        
+   '
    m_DeclDict.ImportVBComponent CurrentVbProject.VBComponents("DeclarationDictTestCodemodule")
    
    Set ActualDict = m_DeclDict.Dict
    
+'   Dim k As Long
+'   For k = 0 To m_DeclDict.Count - 1
+'      Debug.Print m_DeclDict.Dict.Keys(k)
+'   Next
+   
    Assert.That ActualDict.Count, Iz.EqualTo(UBound(ExpectedKeys) + 1), "Count of items"
+   
    
    Dim i As Long
    For i = 0 To UBound(ExpectedKeys)
