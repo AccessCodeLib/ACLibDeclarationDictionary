@@ -49,7 +49,9 @@ End Sub
 'AccUnit:Row("Private Function Func1(a(), b()) As String()", "Func1|a|b")
 'AccUnit:Row("Dim Abc() As String, b(), C As Long", "Abc|b|C")
 'AccUnit:Row("Function Abc(ByVal X as Long) as Long: Abc = X*X: End Function", "Abc|X")
-Public Sub ImportCode_InsertCodeLine_CheckKeysExists(ByVal Code As String, ByVal Expected As String)
+'AccUnit:Row("Function Abc(ByVal X as Long, Optional ByVal Y As String = "" : '"") as Long", "Abc|X|Y")
+'AccUnit:Row("Implements CodeModulGenerator", "CodeModulGenerator")
+Public Sub ImportCode_InsertCodeLine_CheckKeys(ByVal Code As String, ByVal Expected As String)
   
    Dim Actual As String
    
@@ -62,7 +64,7 @@ End Sub
 
 'AccUnit:Row("Private Function Func1() As String" & Environment.NewLine & Environment.NewLine & "   Dim X as String, Y As Long", "Func1|X|Y")
 'AccUnit:Row(Environment.NewLine & "Private abc As String" & Environment.NewLine & Environment.NewLine & "   Public X as String, Y As Long", "abc|X|Y")
-Public Sub ImportCode_InsertCodeLines_CheckKeysExists(ByVal Code As String, ByVal Expected As String)
+Public Sub ImportCode_InsertCodeLines_CheckKeys(ByVal Code As String, ByVal Expected As String)
 
    Dim Actual As String
    
@@ -77,7 +79,7 @@ End Sub
 
 'AccUnit:Row("Private Declare PtrSafe Sub Sleep Lib ""kernel32"" (ByVal dwMilliseconds As LongPtr)", "Sleep|dwMilliseconds")
 'AccUnit:Row("Private Declare PtrSafe Function CopyMemory Lib ""kernel32"" Alias ""RtlMoveMemory""(ByRef Destination As Any, ByRef Source As Any, ByVal Length As Long) As Long", "CopyMemory|Destination|Source|Length")
-Public Sub ImportCode_API_CheckKeysExists(ByVal Code As String, ByVal Expected As String)
+Public Sub ImportCode_API_CheckKeys(ByVal Code As String, ByVal Expected As String)
   
    Dim Actual As String
 '
@@ -138,12 +140,13 @@ Public Sub ImportCode_TypeCode_CheckKeys()
 
 End Sub
 
-Public Sub ImportClassCodeModule_CheckKeys()
+Public Sub ImportClassCodeModule_CheckKeysExists()
 
    Dim ActualDict As Scripting.Dictionary
    
    Dim ExpectedKeys() As Variant
-   ExpectedKeys = Array("AccUnitX", "m_AccUnitInfo", "Field", "Const1", _
+   ExpectedKeys = Array("CodeModulGenerator", "CodeModulGenerator_CreateCodemodule", "ComponentType", "Name", "CodeModulGenerator_InsertDeclarationLine", "Code", "CodeModulGenerator_RemoveCodemodule", _
+                        "AccUnitX", "m_AccUnitInfo", "Field", "Const1", _
                         "TestEnum", "TestEnum_P1", _
                         "TestType1", "FldA", "FldB", "FldC", _
                         "TestEnum2", "TestEnum2_P1", "TestEnum2_P2", _

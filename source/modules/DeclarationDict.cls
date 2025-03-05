@@ -152,7 +152,7 @@ Public Sub ImportCode(ByVal Code As String)
 
    Patterns(ProcIndex) = "(?:\r|\n|^)\s*(?:Sub|Function|Property Get|Property Let|Property Set|Event)\s+([^\r\n]*)"
    Patterns(EnumTypeIndex) = "(?:\r|\n|^)\s*(?:Enum|Type)([\s\S]*?)(?:End\s+(?:Enum|Type))"
-   Patterns(2) = "(?:\r|\n|^)\s*(?:Dim|ReDim|Private|Friend|Public|Const|Static|Global)\s+([^\r\n]*)"
+   Patterns(2) = "(?:\r|\n|^)\s*(?:Dim|ReDim|Private|Friend|Public|Const|Static|Global|Implements)\s+([^\r\n]*)"
 
    Dim i As Long
    For i = 0 To UBound(Patterns)

@@ -12,6 +12,8 @@ Option Explicit
 
 'AccUnit:TestRelated
 
+Implements CodeModulGenerator
+
 Dim AccUnitX As Long
 Private m_AccUnitInfo As String
 Public Field As String
@@ -85,4 +87,17 @@ End Sub
 
 Private Static Sub MyStaticSub(Optional ByVal Reset As Boolean = False)
     Static Counter2 As Integer
+End Sub
+
+
+Private Function CodeModulGenerator_CreateCodemodule(ByVal ComponentType As VBIDE.vbext_ComponentType, Optional ByVal Name As String = vbNullString) As VBIDE.VBComponent
+'
+End Function
+
+Private Sub CodeModulGenerator_InsertDeclarationLine(ByVal Code As String)
+'
+End Sub
+
+Private Sub CodeModulGenerator_RemoveCodemodule()
+'
 End Sub
