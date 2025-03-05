@@ -51,6 +51,7 @@ End Sub
 'AccUnit:Row("Function Abc(ByVal X as Long) as Long: Abc = X*X: End Function", "Abc|X")
 'AccUnit:Row("Function Abc(ByVal X as Long, Optional ByVal Y As String = "" : '"") as Long", "Abc|X|Y")
 'AccUnit:Row("Implements CodeModulGenerator", "CodeModulGenerator")
+'AccUnit:Row("X = 5: Dim Y as Long: Y = 4", "Y")
 Public Sub ImportCode_InsertCodeLine_CheckKeys(ByVal Code As String, ByVal Expected As String)
   
    Dim Actual As String
@@ -63,12 +64,12 @@ Public Sub ImportCode_InsertCodeLine_CheckKeys(ByVal Code As String, ByVal Expec
 End Sub
 
 'AccUnit:Row("Private Function Func1() As String" & Environment.NewLine & Environment.NewLine & "   Dim X as String, Y As Long", "Func1|X|Y")
-'AccUnit:Row(Environment.NewLine & "Private abc As String" & Environment.NewLine & Environment.NewLine & "   Public X as String, Y As Long", "abc|X|Y")
+'AccUnit:Row(Environment.NewLine & "    Private abc " & Environment.NewLine & "   Public X as String, Y As Long", "abc|X|Y")
+'AccUnit:Row("Private Function Func1() As String ' _" & Environment.NewLine & "   Dim X as String, Y As Long", "Func1")
+'AccUnit:Row("Dim abc ' _" & Environment.NewLine & "Dim X as String, Y As Long", "abc")
 Public Sub ImportCode_InsertCodeLines_CheckKeys(ByVal Code As String, ByVal Expected As String)
 
    Dim Actual As String
-   
-   Debug.Print Code
       
    m_DeclDict.ImportCode Code
    Actual = Join(m_DeclDict.Dict.Keys, "|")
@@ -158,6 +159,7 @@ Public Sub ImportClassCodeModule_CheckKeysExists()
                         "RaiseSomething2", "EventParam2", _
                         "Class_Initialize", _
                         "AccUnitTestFunct", "FuncParam1", "FuncParam2", "FuncVar1", "FuncVar2", "FuncVar3", "FuncVar4", "Dim1", "Dim2", _
+                        "ProcWith3DeclLines", "D3P1", "D3P2", _
                         "Name1", "Name2", "NewValue", _
                         "PropertySet", "ObjRef", _
                         "TestMe", _

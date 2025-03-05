@@ -57,13 +57,23 @@ End Sub
 Public Function AccUnitTestFunct(ByVal FuncParam1 As Variant, FuncParam2() As String) As Variant
 
    Dim FuncVar1 As Variant, FuncVar2
-   Dim FuncVar3()
+   Dim FuncVar3() ' _
+   Dim CommentX as String, CommentY As Long
    
    Dim FuncVar4 As Long: FuncVar4 = 5
    
-   Dim Dim1 As Long: Dim Dim2 As Long
+   Dim Dim1 As Long: Dim Dim2
+   
+       Dim Counter2 ' _
+   Public X asString, Y As Long
 
 End Function
+
+Public Sub ProcWith3DeclLines( _
+               ByVal D3P1 As Variant, _
+               ByRef D3P2() As String)
+'
+End Sub
 
 ' Declaration of a property procedure in one line:
 Friend Property Get Name1() As String: Name1 = "TestName": End Property

@@ -10,6 +10,8 @@ Attribute VB_Exposed = False
 Option Compare Database
 Option Explicit
 
+#Const DebugPrintEnabled = 0
+
 Private m_Words As Scripting.Dictionary
 Private m_DiffCnt As Long
 
@@ -143,8 +145,6 @@ Public Sub ImportCode(ByVal Code As String)
 
    Code = PrepareCode(Code, RegEx)
 
-   'Debug.Print Code
-
    Const ProcIndex As Long = 0
    Const EnumTypeIndex As Long = 1
 
@@ -178,6 +178,10 @@ Private Function PrepareCode(ByVal Code As String, ByVal RegEx As RegExp) As Str
 
    Code = Replace(Code, " _" & vbNewLine, " ")
 
+#If DebugPrintEnabled Then
+   DebugPrint Code, True, "PrepareCode - after Replace ' _' & vbNewLine"
+#End If
+
    With RegEx
 
       ' clear all strings
@@ -185,8 +189,13 @@ Private Function PrepareCode(ByVal Code As String, ByVal RegEx As RegExp) As Str
       Code = .Replace(Code, "")
 
       ' remove comments
-      .Pattern = "'(.*)[\r\n]"
+      '.Pattern = "'(.*)[\r\n]"
+      .Pattern = "'(.*)(?:[\r\n]|$)"
       Code = .Replace(Code, "")
+
+#If DebugPrintEnabled Then
+   DebugPrint Code, True, "PrepareCode- after remove comments"
+#End If
 
       ' dim a as String: a = 5  => insert line break
       .Pattern = "(\:\s)"
@@ -212,6 +221,10 @@ Private Function PrepareCode(ByVal Code As String, ByVal RegEx As RegExp) As Str
       Code = .Replace(Code, "$1 ")
 
    End With
+
+#If DebugPrintEnabled Then
+   DebugPrint Code, True, "PrepareCode - completed"
+#End If
 
    PrepareCode = Code
 
@@ -407,3 +420,25 @@ Public Sub ChangeKeyLetterCase(ByVal WordWithNewLetterCase As String)
    m_DiffCnt = -1
 
 End Sub
+
+#If DebugPrintEnabled Then
+
+Private Sub DebugPrint(ByVal Text2Output As String, _
+              Optional ByVal PrintHeaderLine As Boolean = False, _
+              Optional ByVal HeaderLineCaption As String = vbNullString)
+
+   Const HeaderLen As Long = 40
+   Dim StringReplCount As Long
+   If PrintHeaderLine Then
+      StringReplCount = (HeaderLen - Len(HeaderLineCaption)) / 2
+      If StringReplCount < 2 Then
+         StringReplCount = 2
+      End If
+      Debug.Print String(StringReplCount, "-") & HeaderLineCaption & String(StringReplCount, "-")
+   End If
+
+   Debug.Print Text2Output
+
+End Sub
+
+#End If
