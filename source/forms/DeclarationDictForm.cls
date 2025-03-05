@@ -299,53 +299,21 @@ End Sub
 
 Private Sub SaveToTable()
 
-   Dim db As DAO.Database
-   Set db = CurrentDb
-
-   If Not TableDefExists("USysDeclDict", db) Then
-      db.Execute "create table USysDeclDict (DeclWord varchar(255) Not Null Primary Key)", dbFailOnError
-   End If
-
-   Dim rs As DAO.Recordset
-   Dim i As Long
-
-   db.Execute "delete from USysDeclDict"
-   Set rs = db.OpenRecordset("USysDeclDict", dbOpenDynaset, dbAppendOnly)
-   For i = 0 To m_DeclarationDict.Count - 1
-      rs.AddNew
-      rs.Fields(0).Value = m_DeclarationDict.VariationsDict.Keys(i)
-      rs.Update
-   Next
-
-   ShowTableRecInfo m_DeclarationDict.Count & " records were inserted into USysDeclDict"
+   m_DeclarationDict.SaveToTable DefaultDeclDictTableName
+   ShowTableRecInfo m_DeclarationDict.Count & " records were inserted into " & DefaultDeclDictTableName
 
 End Sub
 
 Private Sub LoadFromTable()
 
-   Dim db As DAO.Database
-   Dim rs As DAO.Recordset
-   Dim i As Long
+   Dim ErrMsg As String
 
-   Set db = CurrentDb
-
-   If Not TableDefExists("USysDeclDict", db) Then
-      ShowTableRecInfo "Table USysDeclDict not exists"
+   If Not m_DeclarationDict.LoadFromTable(DefaultDeclDictTableName, ErrMsg) Then
+      ShowTableRecInfo ErrMsg
       Exit Sub
    End If
 
-   Set m_DeclarationDict = New DeclarationDict
-
-
-   Set rs = db.OpenRecordset("select DeclWord from USysDeclDict", dbOpenSnapshot)
-   Do While Not rs.EOF
-      m_DeclarationDict.AddWord rs.Fields(0)
-      rs.MoveNext
-   Loop
-   rs.Close
-   Set db = Nothing
-
-   ShowTableRecInfo m_DeclarationDict.Count & " records were imported from USysDeclDict"
+   ShowTableRecInfo m_DeclarationDict.Count & " records were imported from " & DefaultDeclDictTableName
    RequeryDictData
 
 End Sub

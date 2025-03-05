@@ -445,7 +445,61 @@ Public Sub ChangeKeyLetterCase(ByVal WordWithNewLetterCase As String)
 
 End Sub
 
-Public Sub LoadFromFile(ByVal FullFileName As String)
+Public Function LoadFromTable(ByVal TableName As String, Optional ByRef ErrorMsg As String) As Boolean
+
+   Dim db As DAO.Database
+   Dim rs As DAO.Recordset
+   Dim i As Long
+
+   Set db = CurrentDb
+
+   If Not TableDefExists(TableName, db) Then
+      ErrorMsg = "Table " & TableName & " not exists"
+      LoadFromTable = False
+      Exit Function
+   End If
+
+   Set rs = db.OpenRecordset("select DeclWord from " & TableName, dbOpenSnapshot)
+   Do While Not rs.EOF
+      AddWord rs.Fields(0)
+      rs.MoveNext
+   Loop
+   rs.Close
+   Set db = Nothing
+
+   LoadFromTable = True
+
+End Function
+
+Public Sub SaveToTable(ByVal TableName As String)
+
+   Dim db As DAO.Database
+   Set db = CurrentDb
+
+   If Not TableDefExists(TableName, db) Then
+      db.Execute "create table " & TableName & " (DeclWord varchar(255) Not Null Primary Key)", dbFailOnError
+   End If
+
+   Dim rs As DAO.Recordset
+   Dim i As Long
+
+   db.Execute "delete from " & TableName
+   Set rs = db.OpenRecordset(TableName, dbOpenDynaset, dbAppendOnly)
+   For i = 0 To m_Words.Count - 1
+      rs.AddNew
+      rs.Fields(0).Value = m_Words.Keys(i)
+      rs.Update
+   Next
+
+End Sub
+
+Public Function LoadFromFile(ByVal FullFileName As String, Optional ByRef ErrorMsg As String) As Boolean
+
+   If Not FileExists(FullFileName) Then
+      LoadFromFile = False
+      ErrorMsg = "File " & FullFileName & " not exists"
+      Exit Function
+   End If
 
    With New ADODB.Stream
       .Charset = "utf-8"
@@ -457,7 +511,9 @@ Public Sub LoadFromFile(ByVal FullFileName As String)
       .Close
    End With
 
-End Sub
+   LoadFromFile = True
+
+End Function
 
 Public Sub ExportToFile(ByVal FullFileName As String)
 

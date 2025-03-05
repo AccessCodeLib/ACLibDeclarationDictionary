@@ -18,7 +18,7 @@ Option Explicit
 Option Private Module
 
 'Version number
-Private Const APPLICATION_VERSION As String = "0.2.1.250304"
+Private Const APPLICATION_VERSION As String = "0.3.0.250305"
 
 Private Const APPLICATION_NAME As String = "ACLib Declaration Dictionary"
 Private Const APPLICATION_FULLNAME As String = "Access-CodeLib - Declaration Dictionary"
@@ -27,6 +27,8 @@ Private Const APPLICATION_TITLE As String = APPLICATION_NAME
 Private Const APPLICATION_STARTFORMNAME As String = "DeclarationDictForm"
 
 Private m_Extensions As Object 'ApplicationHandler_ExtensionCollection
+
+Public Const DefaultDeclDictTableName As String = "USysDeclDict"
 
 '---------------------------------------------------------------------------------------
 ' Sub: InitConfig
