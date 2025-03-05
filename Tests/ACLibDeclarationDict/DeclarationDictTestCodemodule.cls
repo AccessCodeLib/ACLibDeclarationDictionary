@@ -36,6 +36,9 @@ Private Type TestType2
    FldC As Date
 End Type
 
+Private WithEvents m_TextBox As TextBox
+Attribute m_TextBox.VB_VarHelpID = -1
+
 Public Event RaiseSomething(ByVal EventParam1 As Variant)
 
 Private Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As LongPtr)

@@ -148,6 +148,7 @@ Public Sub ImportClassCodeModule_CheckKeys()
                         "TestType1", "FldA", "FldB", "FldC", _
                         "TestEnum2", "TestEnum2_P1", "TestEnum2_P2", _
                         "TestType2", "Fld2A", "Fld2B", _
+                        "m_TextBox", _
                         "RaiseSomething", "EventParam1", _
                         "Sleep", "dwMilliseconds", _
                         "CopyMemory", "Destination", "Source", "Length", _

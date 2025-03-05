@@ -192,6 +192,10 @@ Private Function PrepareCode(ByVal Code As String, ByVal RegEx As RegExp) As Str
       .Pattern = "(\:\s)"
       Code = .Replace(Code, vbNewLine)
 
+      ' remove Withevents
+      .Pattern = "(Public|Private|Friend|Global)\sWithEvents\s"
+      Code = .Replace(Code, "$1 ")
+
       ' API declaration => convert to normal procedure declaration
       .Pattern = "(?:Declare PtrSafe)\s(Function|Sub)\s"
       Code = .Replace(Code, "Declare $1 ")
@@ -238,9 +242,6 @@ Private Sub AddWordFromDeclaration(ByRef Declarations As String, ByVal IsProcedu
    If IsEnumTypeBlock Then
       Declarations = Replace(Declarations, vbCr, ",")
       Declarations = Replace(Declarations, vbLf, vbNullString)
-   Else
-      Declarations = Replace(Declarations, vbCr, vbNullString)
-      Declarations = Replace(Declarations, vbLf, vbNullString)
    End If
 
    Declarations = Trim(Declarations)
@@ -258,8 +259,6 @@ Private Sub AddWordFromDeclaration(ByRef Declarations As String, ByVal IsProcedu
          Mid(Declarations, Pos, 1) = ","
       End If
       Declarations = Replace(Declarations, ")", vbNullString)
-   ElseIf IsEnumTypeBlock Then
-   '   Debug.Print Declarations
    End If
 
    Do While InStr(1, Declarations, "  ") > 0
