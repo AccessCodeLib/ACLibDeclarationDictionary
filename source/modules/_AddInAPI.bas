@@ -7,3 +7,9 @@ Public Function StartAddIn()
    StartApplication
 
 End Function
+
+Public Function RunVcsCheck()
+
+
+
+End Function

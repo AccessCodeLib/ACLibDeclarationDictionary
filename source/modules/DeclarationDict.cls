@@ -13,6 +13,7 @@ Option Explicit
 #Const DebugPrintEnabled = 0
 
 Private m_Words As Scripting.Dictionary
+Private m_WordVariations As Scripting.Dictionary
 Private m_DiffCnt As Long
 
 Public Event WordInserted(ByVal WordKey As String)
@@ -20,6 +21,7 @@ Public Event WordChanged(ByVal WordKey As String)
 
 Private Sub Class_Initialize()
    Set m_Words = GetNewDict(TextCompare)
+   Set m_WordVariations = GetNewDict(TextCompare)
    m_DiffCnt = -1
 End Sub
 
@@ -30,8 +32,8 @@ Private Function GetNewDict(ByVal CompareMode As Scripting.CompareMethod) As Scr
    Set GetNewDict = Dict
 End Function
 
-Friend Property Get Dict() As Scripting.Dictionary
-   Set Dict = m_Words
+Friend Property Get VariationsDict() As Scripting.Dictionary
+   Set VariationsDict = m_WordVariations
 End Property
 
 Public Property Get Count() As Long
@@ -53,7 +55,7 @@ Private Function GetDiffCnt() As Long
 
    For i = 0 To m_Words.Count - 1
       Word = m_Words.Keys(i)
-      If IsChangedItem(Word, m_Words.Item(Word)) Then
+      If IsChangedItem(Word, m_WordVariations.Item(Word)) Then
          DifCntr = DifCntr + 1
       End If
    Next
@@ -64,13 +66,17 @@ End Function
 
 Public Function IsWordWithChangedLetterCase(ByVal Word As String) As Boolean
 
-   IsWordWithChangedLetterCase = IsChangedItem(Word, m_Words.Item(Word))
+   IsWordWithChangedLetterCase = IsChangedItem(Word, m_WordVariations.Item(Word))
 
 End Function
 
 Private Function IsChangedItem(ByVal Word As String, ByVal SubDict As Scripting.Dictionary) As Boolean
 
    Dim LastKey As String
+
+   If StrComp(Word, m_Words.Item(Word), vbBinaryCompare) <> 0 Then
+      Word = m_Words.Item(Word)
+   End If
 
    With SubDict
       If .Count > 1 Then
@@ -85,6 +91,18 @@ End Function
 
 Public Sub AddWord(ByVal Word As String)
 
+   Word = Trim(Word)
+
+   If Left(Word, 1) = "[" Then
+      If Right(Word, 1) = "]" Then
+         Word = Trim(Mid(Word, 2, Len(Word) - 2))
+      End If
+   End If
+
+   If Len(Word) = 0 Then
+      Exit Sub
+   End If
+
    m_DiffCnt = -1
 
    Dim SubDict As Scripting.Dictionary
@@ -93,11 +111,12 @@ Public Sub AddWord(ByVal Word As String)
    Dim RaiseChanged As Boolean
 
    If Not m_Words.Exists(Word) Then
-      m_Words.Add Word, GetNewDict(BinaryCompare)
+      m_Words.Add Word, Word
+      m_WordVariations.Add Word, GetNewDict(BinaryCompare)
       RaiseInsert = True
    End If
 
-   Set SubDict = m_Words.Item(Word)
+   Set SubDict = m_WordVariations.Item(Word)
    With SubDict
       If Not .Exists(Word) Then
          .Add Word, Word
@@ -320,17 +339,17 @@ Public Function ToString(Optional ByVal ShowAll As Boolean = False) As String
    Dim WordKey As Variant
    Dim WordIndex As Long
 
-   Dim VariantsDict As Scripting.Dictionary
+   Dim VariationsDict As Scripting.Dictionary
 
    Dim OutputString As String
 
    For WordIndex = 0 To m_Words.Count - 1
 
       WordKey = m_Words.Keys(WordIndex)
-      Set VariantsDict = m_Words.Item(WordKey)
+      Set VariationsDict = m_Words.Item(WordKey)
 
-      If VariantsDict.Count > (1 - Abs(ShowAll)) Then
-         OutputString = OutputString & vbNewLine & WordKey & ":" & GetWordVariantsOutputString(WordKey)
+      If VariationsDict.Count > (1 - Abs(ShowAll)) Then
+         OutputString = OutputString & vbNewLine & WordKey & ":" & GetWordVariationsOutputString(WordKey)
       End If
 
    Next
@@ -344,9 +363,9 @@ Public Function ToDict(Optional ByVal ShowAll As Boolean = False) As Scripting.D
    Dim WordKey As Variant
    Dim WordIndex As Long
    Dim OutputWord As Boolean
-   Dim VariantsString As String
+   Dim VariationsString As String
 
-   Dim VariantsDict As Scripting.Dictionary
+   Dim VariationsDict As Scripting.Dictionary
 
    Dim OutputDict As Scripting.Dictionary
    Set OutputDict = New Scripting.Dictionary
@@ -356,18 +375,18 @@ Public Function ToDict(Optional ByVal ShowAll As Boolean = False) As Scripting.D
    For WordIndex = 0 To m_Words.Count - 1
 
       WordKey = m_Words.Keys(WordIndex)
-      Set VariantsDict = m_Words.Item(WordKey)
+      Set VariationsDict = m_WordVariations.Item(WordKey)
 
       If Not ShowAll Then
-         OutputWord = IsChangedItem(WordKey, VariantsDict)
+         OutputWord = IsChangedItem(WordKey, VariationsDict)
       End If
       If OutputWord Then
-         If VariantsDict.Count > 1 Then
-            VariantsString = GetWordVariantsOutputString(WordKey)
+         If VariationsDict.Count > 1 Then
+            VariationsString = GetWordVariationsOutputString(WordKey)
          Else
-            VariantsString = vbNullString
+            VariationsString = vbNullString
          End If
-         OutputDict.Add WordKey, VariantsString
+         OutputDict.Add WordKey, VariationsString
       End If
 
    Next
@@ -376,37 +395,41 @@ Public Function ToDict(Optional ByVal ShowAll As Boolean = False) As Scripting.D
 
 End Function
 
-Private Function GetWordVariantsOutputString(ByVal Word As String, Optional ByVal IgnoreOriginalWord As Boolean = True) As String
+Private Function GetWordVariationsOutputString(ByVal Word As String, Optional ByVal IgnoreOriginalWord As Boolean = True) As String
 
-   GetWordVariantsOutputString = Join(GetWordVariants(Word, IgnoreOriginalWord), "|")
+   GetWordVariationsOutputString = Join(GetWordVariations(Word, IgnoreOriginalWord), "|")
 
 End Function
 
-Public Function GetWordVariants(ByVal Word As String, Optional ByVal IgnoreOriginalWord As Boolean = False) As String()
+Public Function GetWordVariations(ByVal Word As String, Optional ByVal IgnoreOriginalWord As Boolean = False) As String()
 
-   Dim Variants() As String
+   Dim Variations() As String
    Dim VariantWord As String
    Dim AppendVariant As Boolean
    Dim i As Long, k As Long
-   Dim VariantsDict As Scripting.Dictionary
+   Dim VariationsDict As Scripting.Dictionary
 
-   Set VariantsDict = m_Words.Item(Word)
-   ReDim Variants(VariantsDict.Count - 1 - Abs(IgnoreOriginalWord))
+   If StrComp(Word, m_Words.Item(Word), vbBinaryCompare) <> 0 Then
+      Word = m_Words.Item(Word)
+   End If
+
+   Set VariationsDict = m_WordVariations.Item(Word)
+   ReDim Variations(VariationsDict.Count - 1 - Abs(IgnoreOriginalWord))
 
    AppendVariant = Not IgnoreOriginalWord
 
-   For i = 0 To VariantsDict.Count - 1
-      VariantWord = VariantsDict.Keys(i)
+   For i = 0 To VariationsDict.Count - 1
+      VariantWord = VariationsDict.Keys(i)
       If IgnoreOriginalWord Then
          AppendVariant = StrComp(Word, VariantWord, vbBinaryCompare) <> 0
       End If
       If AppendVariant Then
-         Variants(k) = VariantWord
+         Variations(k) = VariantWord
          k = k + 1
       End If
    Next
 
-   GetWordVariants = Variants
+   GetWordVariations = Variations
 
 End Function
 
@@ -415,9 +438,41 @@ Public Sub ChangeKeyLetterCase(ByVal WordWithNewLetterCase As String)
    With m_Words
       .Key(WordWithNewLetterCase) = "~ " & WordWithNewLetterCase & " ~"
       .Key("~ " & WordWithNewLetterCase & " ~") = WordWithNewLetterCase
+      .Item(WordWithNewLetterCase) = WordWithNewLetterCase
    End With
 
    m_DiffCnt = -1
+
+End Sub
+
+Public Sub LoadFromFile(ByVal FullFileName As String)
+
+   With New ADODB.Stream
+      .Charset = "utf-8"
+      .Open
+      .LoadFromFile FullFileName
+      Do Until .EOS
+          AddWord .ReadText(StreamReadEnum.adReadLine)
+      Loop
+      .Close
+   End With
+
+End Sub
+
+Public Sub ExportToFile(ByVal FullFileName As String)
+
+   Dim i As Long
+
+   With New ADODB.Stream
+      .Type = 2
+      .Charset = "utf-8"
+      .Open
+      For i = 0 To m_Words.Count - 1
+         .WriteText m_Words.Keys(i), adWriteLine
+      Next
+      .SaveToFile FullFileName, adSaveCreateOverWrite
+      .Close
+   End With
 
 End Sub
 

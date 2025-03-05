@@ -15,9 +15,9 @@ Begin Form
     GridY =10
     Width =10148
     DatasheetFontHeight =11
-    ItemSuffix =69
-    Left =9615
-    Top =1545
+    ItemSuffix =78
+    Left =5145
+    Top =3045
     Right =18810
     Bottom =14775
     OnUnload ="[Event Procedure]"
@@ -157,9 +157,9 @@ Begin Form
                     Left =60
                     Top =789
                     Width =5416
-                    Height =4827
+                    Height =4542
                     FontSize =9
-                    TabIndex =4
+                    TabIndex =11
                     Name ="lbDictData"
                     RowSourceType ="Table/Query"
                     ColumnWidths ="2835"
@@ -172,7 +172,7 @@ Begin Form
                     LayoutCachedLeft =60
                     LayoutCachedTop =789
                     LayoutCachedWidth =5476
-                    LayoutCachedHeight =5616
+                    LayoutCachedHeight =5331
                 End
                 Begin OptionGroup
                     SpecialEffect =0
@@ -270,7 +270,7 @@ Begin Form
                     Top =1905
                     Width =4380
                     Height =1350
-                    TabIndex =7
+                    TabIndex =8
                     ForeColor =0
                     Name ="lbVariations"
                     RowSourceType ="Value List"
@@ -307,7 +307,7 @@ Begin Form
                     Width =4380
                     Height =315
                     FontWeight =700
-                    TabIndex =5
+                    TabIndex =6
                     Name ="txtWord"
                     ControlSource ="=[lbDictData]"
                     Format ="@;;\"(select item)\""
@@ -424,7 +424,7 @@ Begin Form
                     Top =1245
                     Width =4380
                     Height =300
-                    TabIndex =6
+                    TabIndex =7
                     Name ="txtCurrentLetterCase"
                     Format ="@;;---"
                     ConditionalFormat = Begin
@@ -517,7 +517,7 @@ Begin Form
                     Top =3615
                     Width =3405
                     Height =345
-                    TabIndex =8
+                    TabIndex =9
                     Name ="txtSelectedLetterCase"
                     ControlSource ="=[lbVariations]"
                     Format ="@;;---"
@@ -575,7 +575,7 @@ Begin Form
                     Top =3615
                     Width =915
                     Height =345
-                    TabIndex =9
+                    TabIndex =10
                     Name ="cmdChangeLetterCase"
                     Caption ="Commit"
                     OnClick ="[Event Procedure]"
@@ -605,19 +605,19 @@ Begin Form
                 Begin CommandButton
                     OverlapFlags =85
                     Left =3750
-                    Top =5790
+                    Top =5445
                     Width =1695
                     Height =300
-                    TabIndex =11
+                    TabIndex =13
                     Name ="cmdSaveToTable"
                     Caption ="Export to table"
                     OnClick ="[Event Procedure]"
                     GroupTable =2
 
                     LayoutCachedLeft =3750
-                    LayoutCachedTop =5790
+                    LayoutCachedTop =5445
                     LayoutCachedWidth =5445
-                    LayoutCachedHeight =6090
+                    LayoutCachedHeight =5745
                     ColumnStart =2
                     ColumnEnd =2
                     LayoutGroup =2
@@ -634,19 +634,19 @@ Begin Form
                 Begin CommandButton
                     OverlapFlags =85
                     Left =1995
-                    Top =5790
+                    Top =5445
                     Width =1695
                     Height =300
-                    TabIndex =10
+                    TabIndex =12
                     Name ="cmdLoadFromTable"
                     Caption ="Load from table"
                     OnClick ="[Event Procedure]"
                     GroupTable =2
 
                     LayoutCachedLeft =1995
-                    LayoutCachedTop =5790
+                    LayoutCachedTop =5445
                     LayoutCachedWidth =3690
-                    LayoutCachedHeight =6090
+                    LayoutCachedHeight =5745
                     ColumnStart =1
                     ColumnEnd =1
                     LayoutGroup =2
@@ -664,16 +664,17 @@ Begin Form
                             OverlapFlags =85
                             TextAlign =1
                             Left =60
-                            Top =5790
-                            Width =1871
+                            Top =5445
+                            Width =1875
                             Height =300
+                            FontSize =10
                             Name ="Label56"
                             Caption ="Table: USysDeclDict"
                             GroupTable =2
                             LayoutCachedLeft =60
-                            LayoutCachedTop =5790
-                            LayoutCachedWidth =1931
-                            LayoutCachedHeight =6090
+                            LayoutCachedTop =5445
+                            LayoutCachedWidth =1935
+                            LayoutCachedHeight =5745
                             LayoutGroup =2
                             GroupTable =2
                         End
@@ -717,7 +718,7 @@ Begin Form
                     Top =446
                     Width =3073
                     Height =300
-                    TabIndex =12
+                    TabIndex =5
                     Name ="filtWord"
                     AfterUpdate ="[Event Procedure]"
 
@@ -747,7 +748,7 @@ Begin Form
                     Top =429
                     Width =1495
                     Height =328
-                    TabIndex =13
+                    TabIndex =4
                     Name ="cmdRemoveFilter"
                     Caption ="remove filter"
                     OnClick ="[Event Procedure]"
@@ -767,6 +768,90 @@ Begin Form
                     HoverForeThemeColorIndex =0
                     PressedForeThemeColorIndex =0
                     Overlaps =1
+                End
+                Begin CommandButton
+                    OverlapFlags =85
+                    Left =3750
+                    Top =5805
+                    Width =1695
+                    Height =315
+                    TabIndex =15
+                    Name ="cmdSaveToFile"
+                    Caption ="Export to file"
+                    OnClick ="[Event Procedure]"
+                    GroupTable =2
+
+                    LayoutCachedLeft =3750
+                    LayoutCachedTop =5805
+                    LayoutCachedWidth =5445
+                    LayoutCachedHeight =6120
+                    RowStart =1
+                    RowEnd =1
+                    ColumnStart =2
+                    ColumnEnd =2
+                    LayoutGroup =2
+                    ForeThemeColorIndex =0
+                    GridlineThemeColorIndex =1
+                    BackThemeColorIndex =4
+                    BorderThemeColorIndex =4
+                    HoverThemeColorIndex =4
+                    PressedThemeColorIndex =4
+                    HoverForeThemeColorIndex =0
+                    PressedForeThemeColorIndex =0
+                    GroupTable =2
+                End
+                Begin CommandButton
+                    OverlapFlags =85
+                    Left =1995
+                    Top =5805
+                    Width =1695
+                    Height =315
+                    TabIndex =14
+                    Name ="cmdLoadFromFile"
+                    Caption ="Load from file"
+                    OnClick ="[Event Procedure]"
+                    GroupTable =2
+
+                    LayoutCachedLeft =1995
+                    LayoutCachedTop =5805
+                    LayoutCachedWidth =3690
+                    LayoutCachedHeight =6120
+                    RowStart =1
+                    RowEnd =1
+                    ColumnStart =1
+                    ColumnEnd =1
+                    LayoutGroup =2
+                    ForeThemeColorIndex =0
+                    GridlineThemeColorIndex =1
+                    BackThemeColorIndex =4
+                    BorderThemeColorIndex =4
+                    HoverThemeColorIndex =4
+                    PressedThemeColorIndex =4
+                    HoverForeThemeColorIndex =0
+                    PressedForeThemeColorIndex =0
+                    GroupTable =2
+                    Begin
+                        Begin Label
+                            OverlapFlags =85
+                            TextAlign =1
+                            Left =60
+                            Top =5805
+                            Width =1875
+                            Height =315
+                            FontSize =10
+                            Name ="Bezeichnungsfeld71"
+                            Caption ="File: DeclarationDict"
+                            GroupTable =2
+                            LayoutCachedLeft =60
+                            LayoutCachedTop =5805
+                            LayoutCachedWidth =1935
+                            LayoutCachedHeight =6120
+                            RowStart =1
+                            RowEnd =1
+                            LayoutGroup =2
+                            GroupTable =2
+                        End
+                    End
                 End
             End
         End
