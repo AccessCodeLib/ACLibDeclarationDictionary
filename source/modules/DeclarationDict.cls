@@ -25,12 +25,20 @@ Private Sub Class_Initialize()
    m_DiffCnt = -1
 End Sub
 
+Friend Property Get Self() As DeclarationDict
+   Set Self = Me
+End Property
+
 Private Function GetNewDict(ByVal CompareMode As Scripting.CompareMethod) As Scripting.Dictionary
    Dim Dict As Scripting.Dictionary
    Set Dict = New Scripting.Dictionary
    Dict.CompareMode = CompareMode
    Set GetNewDict = Dict
 End Function
+
+Friend Property Get WordsDict() As Scripting.Dictionary
+   Set WordsDict = m_Words
+End Property
 
 Friend Property Get VariationsDict() As Scripting.Dictionary
    Set VariationsDict = m_WordVariations

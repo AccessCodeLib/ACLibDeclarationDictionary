@@ -15,10 +15,10 @@ Begin Form
     GridY =10
     Width =10148
     DatasheetFontHeight =11
-    ItemSuffix =78
-    Left =5145
+    ItemSuffix =81
+    Left =9915
     Top =3045
-    Right =18810
+    Right =28425
     Bottom =14775
     OnUnload ="[Event Procedure]"
     RecSrcDt = Begin
@@ -338,7 +338,7 @@ Begin Form
                     OverlapFlags =85
                     Left =5494
                     Top =60
-                    Height =328
+                    Height =397
                     TabIndex =3
                     Name ="cmdUpdateDict"
                     Caption ="update data"
@@ -347,7 +347,7 @@ Begin Form
                     LayoutCachedLeft =5494
                     LayoutCachedTop =60
                     LayoutCachedWidth =7195
-                    LayoutCachedHeight =388
+                    LayoutCachedHeight =457
                     ForeThemeColorIndex =0
                     GridlineThemeColorIndex =1
                     BackThemeColorIndex =4
@@ -400,19 +400,19 @@ Begin Form
                 End
                 Begin Label
                     OverlapFlags =85
-                    Left =7426
+                    Left =5669
                     Top =4081
                     Width =2595
-                    Height =1552
+                    Height =1402
                     Name ="Label17"
                     Caption ="Test steps:\015\012   1. [update data]\015\012   2. change lettercase\015\012   "
                         "3. [update data]\015\012   4. show differences "
                     HorizontalAnchor =1
                     VerticalAnchor =1
-                    LayoutCachedLeft =7426
+                    LayoutCachedLeft =5669
                     LayoutCachedTop =4081
-                    LayoutCachedWidth =10021
-                    LayoutCachedHeight =5633
+                    LayoutCachedWidth =8264
+                    LayoutCachedHeight =5483
                 End
                 Begin TextBox
                     Locked = NotDefault
@@ -683,14 +683,14 @@ Begin Form
                 Begin Label
                     OverlapFlags =93
                     Left =5503
-                    Top =5803
+                    Top =5563
                     Width =4525
-                    Height =300
+                    Height =540
                     LeftMargin =57
                     Name ="lblTableRecInfo"
                     HorizontalAnchor =2
                     LayoutCachedLeft =5503
-                    LayoutCachedTop =5803
+                    LayoutCachedTop =5563
                     LayoutCachedWidth =10028
                     LayoutCachedHeight =6103
                     ForeThemeColorIndex =2
@@ -852,6 +852,67 @@ Begin Form
                             GroupTable =2
                         End
                     End
+                End
+                Begin CommandButton
+                    OverlapFlags =85
+                    Left =9008
+                    Top =56
+                    Width =1026
+                    Height =397
+                    TabIndex =16
+                    Name ="cmdAPI"
+                    Caption ="  API"
+                    OnClick ="[Event Procedure]"
+                    ImageData = Begin
+                        0x2800000010000000100000000100200000000000000000000000000000000000 ,
+                        0x000000000000000000000000000000000000000000000000b17d4a27b17d4a8d ,
+                        0xb17d4acfb17d4affb17d4affb17d4acfb17d4a8db17d4a270000000000000000 ,
+                        0x0000000000000000000000000000000000000000b17d4a72b17d4af6b17d4aff ,
+                        0xb17d4affb17d4affb17d4affb17d4affb17d4affb17d4af6b17d4a7200000000 ,
+                        0x000000000000000000000000b17d4a06b17d4ab7b17d4affb17d4affb17d4aff ,
+                        0xb17d4affffffffffffffffffb17d4affb17d4affb17d4affb17d4affb17d4ab7 ,
+                        0xb17d4a060000000000000000b17d4a93b17d4affb17d4affb17d4affb17d4aff ,
+                        0xb17d4affffffffffffffffffb17d4affb17d4affb17d4affb17d4affb17d4aff ,
+                        0xb17d4a9000000000b17d4a2db17d4afcb17d4affb17d4affb17d4affb17d4aff ,
+                        0xb17d4affc1976effc1976effb17d4affb17d4affb17d4affb17d4affb17d4aff ,
+                        0xb17d4afcb17d4a2db17d4a93b17d4affb17d4affb17d4affb17d4affb17d4aff ,
+                        0xc1976effffffffffe9daccffb17d4affb17d4affb17d4affb17d4affb17d4aff ,
+                        0xb17d4affb17d4a90b17d4adbb17d4affb17d4affb17d4affb17d4affb17d4aff ,
+                        0xb8895bfffefdfdfff9f4f0ffba8c5fffb17d4affb17d4affb17d4affb17d4aff ,
+                        0xb17d4affb17d4ad5b17d4af9b17d4affb17d4affb17d4affb17d4affb17d4aff ,
+                        0xb17d4affdac2aafffffffffff4ede5ffb98b5dffb17d4affb17d4affb17d4aff ,
+                        0xb17d4affb17d4af3b17d4af9b17d4affb17d4affb17d4affb17d4affb17d4aff ,
+                        0xb17d4affb17d4affe0cbb7fffffffffff3ebe3ffb8895bffb17d4affb17d4aff ,
+                        0xb17d4affb17d4af0b17d4ad8b17d4affb17d4affb17d4affb17d4affbf946aff ,
+                        0xb17d4affb17d4affb17d4affe3d0bdffffffffffdbc3acffb17d4affb17d4aff ,
+                        0xb17d4affb17d4ad5b17d4a90b17d4affb17d4affb27f4cfff9f6f2ffffffffff ,
+                        0xc1976effb17d4affb17d4affd4b79bffffffffffe0cbb7ffb17d4affb17d4aff ,
+                        0xb17d4affb17d4a8db17d4a2db17d4afcb17d4affb17d4affd9c0a8ffffffffff ,
+                        0xf5eee8ffd2b497ffd8bda3fffbf9f6fffdfcfbffc1976effb17d4affb17d4aff ,
+                        0xb17d4afcb17d4a2a00000000b17d4a90b17d4affb17d4affb27f4cffd9c0a8ff ,
+                        0xfefdfdfffffffffffffffffff7f1ecffc7a27dffb17d4affb17d4affb17d4aff ,
+                        0xb17d4a8d0000000000000000b17d4a06b17d4ab7b17d4affb17d4affb17d4aff ,
+                        0xb78859ffc7a27dffc1976effb17d4affb17d4affb17d4affb17d4affb17d4ab7 ,
+                        0xb17d4a0600000000000000000000000000000000b17d4a72b17d4af6b17d4aff ,
+                        0xb17d4affb17d4affb17d4affb17d4affb17d4affb17d4af6b17d4a7200000000 ,
+                        0x000000000000000000000000000000000000000000000000b17d4a27b17d4a8d ,
+                        0xb17d4accb17d4afcb17d4afcb17d4accb17d4a8db17d4a270000000000000000 ,
+                        0x0000000000000000
+                    End
+
+                    LayoutCachedLeft =9008
+                    LayoutCachedTop =56
+                    LayoutCachedWidth =10034
+                    LayoutCachedHeight =453
+                    PictureCaptionArrangement =5
+                    ForeThemeColorIndex =0
+                    GridlineThemeColorIndex =1
+                    BackThemeColorIndex =4
+                    BorderThemeColorIndex =4
+                    HoverThemeColorIndex =4
+                    PressedThemeColorIndex =4
+                    HoverForeThemeColorIndex =0
+                    PressedForeThemeColorIndex =0
                 End
             End
         End

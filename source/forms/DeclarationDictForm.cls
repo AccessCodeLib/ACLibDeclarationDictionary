@@ -7,8 +7,23 @@ Option Explicit
 
 Private WithEvents m_DeclarationDict As DeclarationDict
 Attribute m_DeclarationDict.VB_VarHelpID = -1
-
 Private m_InsertRecordset As DAO.Recordset
+Private m_RunAsAPI As Boolean
+
+Friend Property Get ActiveDeclarationDict() As DeclarationDict
+   If m_DeclarationDict Is Nothing Then
+      Set m_DeclarationDict = New DeclarationDict
+   End If
+   Set ActiveDeclarationDict = m_DeclarationDict
+End Property
+
+Friend Property Set ActiveDeclarationDict(ByRef DeclarationDictRef As DeclarationDict)
+   Set m_DeclarationDict = DeclarationDictRef
+End Property
+
+Private Sub cmdAPI_Click()
+   DoCmd.OpenForm "InfoFormAPI"
+End Sub
 
 Private Sub cmdLoadFromFile_Click()
    LoadFromFile
@@ -46,8 +61,17 @@ Private Sub Form_Load()
    End With
 
    CodeDb.Execute "delete from tabWords"
-   Set m_DeclarationDict = New DeclarationDict
 
+   If Me.OpenArgs = "RunAsApiDialog" Then
+      SetApiDialogMode
+   End If
+
+End Sub
+
+Private Sub SetApiDialogMode()
+   m_RunAsAPI = True
+   Set m_DeclarationDict = GetDeclarationDictTransferReference
+   FillWordTableFromDict
 End Sub
 
 Private Sub Form_Timer()
@@ -65,7 +89,7 @@ Private Sub cmdChangeLetterCase_Click()
 End Sub
 
 Private Sub cmdUpdateDict_Click()
-   m_DeclarationDict.ImportVBProject CurrentVbProject
+   ActiveDeclarationDict.ImportVBProject CurrentVbProject
    If Not (m_InsertRecordset Is Nothing) Then
       m_InsertRecordset.Close
       Set m_InsertRecordset = Nothing
@@ -82,6 +106,10 @@ Private Sub lbVariations_AfterUpdate()
 End Sub
 
 Private Sub m_DeclarationDict_WordChanged(ByVal WordKey As String)
+   UpdateChangedWord WordKey
+End Sub
+
+Private Sub UpdateChangedWord(ByVal WordKey As String)
 
    Static db As DAO.Database
    If db Is Nothing Then
@@ -89,13 +117,10 @@ Private Sub m_DeclarationDict_WordChanged(ByVal WordKey As String)
    End If
 
    Dim UpdateSql As String
-   'UpdateSql = "Update tabWords set Word=" & SqlTools.TextToSqlText(WordKey)
    UpdateSql = "Update tabWords set Diff=" & SqlTools.BooleanToSqlText(m_DeclarationDict.IsWordWithChangedLetterCase(WordKey), "True")
    If m_DeclarationDict.VariationsDict.Item(WordKey).Count > 1 Then
       UpdateSql = UpdateSql & ", Variations =" & SqlTools.TextToSqlText(Join(m_DeclarationDict.GetWordVariations(WordKey, True), "|"))
    End If
-   'UpdateSql = UpdateSql & ", Diff=" & SqlTools.BooleanToSqlText(m_DeclarationDict.IsWordWithChangedLetterCase(WordKey), "True")
-   'UpdateSql = UpdateSql & ", Diff=(StrComp([Word], " & SqlTools.TextToSqlText(WordKey) & ", 0)<>0)"
 
    UpdateSql = UpdateSql & " where Word=" & SqlTools.TextToSqlText(WordKey)
 
@@ -123,35 +148,40 @@ Private Sub ogViewMode_AfterUpdate()
    RequeryDictData
 End Sub
 
-'Private Sub FillWordTable()
-'
-'   CodeDb.Execute "delete from tabWords"
-'   Me.lbDictData.Requery
-'
-'   Dim rs As DAO.Recordset
-'   Set rs = CodeDb.OpenRecordset("tabWords", dbOpenDynaset, dbAppendOnly)
-'
-'   Dim listDict As Scripting.Dictionary
-'   Set listDict = m_DeclarationDict.ToDict(CBool(Me.ogViewMode.Value))
-'
-'   Dim DictIndex As Long
-'   Dim DictKey As String
-'
-'   For DictIndex = 0 To listDict.Count - 1
-'
-'      DictKey = listDict.Keys(DictIndex)
-'
-'      rs.AddNew
-'      rs.Fields(0).Value = DictKey
-'      rs.Fields(1).Value = listDict.Item(DictKey)
-'      rs.Fields(2).Value = listDict.Item(DictKey)
-'      rs.Update
-'
-'   Next
-'
-'   RequeryDictData
-'
-'End Sub
+Private Sub FillWordTableFromDict()
+
+   CodeDb.Execute "delete from tabWords"
+
+   Dim DictIndex As Long
+   Dim DictKey As String
+   Dim WordsDict As Dictionary
+
+   Set WordsDict = m_DeclarationDict.WordsDict
+
+   If m_InsertRecordset Is Nothing Then
+      Set m_InsertRecordset = CodeDb.OpenRecordset("tabWords", dbOpenDynaset, dbAppendOnly)
+   End If
+
+   For DictIndex = 0 To WordsDict.Count - 1
+      DictKey = WordsDict.Keys(DictIndex)
+      AddRecord DictKey
+   Next
+
+   RequeryDictData
+
+End Sub
+
+Private Sub AddRecord(ByVal WordKey As String)
+
+   m_InsertRecordset.AddNew
+   m_InsertRecordset.Fields(0).Value = WordKey
+   If m_DeclarationDict.VariationsDict.Item(WordKey).Count > 1 Then
+      m_InsertRecordset.Fields(1).Value = Join(m_DeclarationDict.GetWordVariations(WordKey, True), "|")
+   End If
+   m_InsertRecordset.Fields(2).Value = m_DeclarationDict.IsWordWithChangedLetterCase(WordKey)
+   m_InsertRecordset.Update
+
+End Sub
 
 Private Sub RequeryDictData()
 
@@ -191,7 +221,9 @@ Private Sub RequeryDictData()
 End Sub
 
 Private Sub RefreshDictInfo()
-   Me.txtDictInfo.Value = m_DeclarationDict.DiffCount & " / " & m_DeclarationDict.Count
+   With ActiveDeclarationDict
+      Me.txtDictInfo.Value = .DiffCount & " / " & .Count
+   End With
 End Sub
 
 Private Sub ResetVariations()
@@ -207,7 +239,7 @@ Private Sub FillWordVariationsList()
    lb.RowSource = vbNullString
 
    Dim Items() As String
-   Items = m_DeclarationDict.GetWordVariations(Me.txtWord.Value)
+   Items = ActiveDeclarationDict.GetWordVariations(Me.txtWord.Value)
 
    Dim i As Long
    For i = LBound(Items) To UBound(Items)
@@ -268,17 +300,21 @@ Private Sub ChangeLetterCase()
         .RemoveCodemodule
     End With
 
-    m_DeclarationDict.AddWord ChangeTo
+    ActiveDeclarationDict.AddWord ChangeTo
 
     FillWordVariationsList
 
     Me.SetFocus
 
+    If m_RunAsAPI Then
+      RequeryDictData
+    End If
+
 End Sub
 
 Private Sub SetCurrentLetterCaseAsDefault(ByVal ChangeTo As String)
 
-   m_DeclarationDict.ChangeKeyLetterCase ChangeTo
+   ActiveDeclarationDict.ChangeKeyLetterCase ChangeTo
 
    Dim UpdateSql As String
    Dim VariationsString As String
@@ -299,8 +335,10 @@ End Sub
 
 Private Sub SaveToTable()
 
-   m_DeclarationDict.SaveToTable DefaultDeclDictTableName
-   ShowTableRecInfo m_DeclarationDict.Count & " records were inserted into " & DefaultDeclDictTableName
+   With ActiveDeclarationDict
+      .SaveToTable DefaultDeclDictTableName
+      ShowTableRecInfo .Count & " records were inserted into " & DefaultDeclDictTableName
+   End With
 
 End Sub
 
@@ -308,12 +346,12 @@ Private Sub LoadFromTable()
 
    Dim ErrMsg As String
 
-   If Not m_DeclarationDict.LoadFromTable(DefaultDeclDictTableName, ErrMsg) Then
+   If Not ActiveDeclarationDict.LoadFromTable(DefaultDeclDictTableName, ErrMsg) Then
       ShowTableRecInfo ErrMsg
       Exit Sub
    End If
 
-   ShowTableRecInfo m_DeclarationDict.Count & " records were imported from " & DefaultDeclDictTableName
+   ShowTableRecInfo ActiveDeclarationDict.Count & " records were imported from " & DefaultDeclDictTableName
    RequeryDictData
 
 End Sub
@@ -325,12 +363,16 @@ Private Sub ShowTableRecInfo(ByVal Info As String)
 End Sub
 
 Private Sub SaveToFile()
-   m_DeclarationDict.ExportToFile CurrentProject.Path & "\DeclarationDict.txt"
-   ShowTableRecInfo m_DeclarationDict.Count & " records were exported to DeclarationDict.txt"
+   With ActiveDeclarationDict
+      .ExportToFile CurrentProject.Path & "\" & CurrentProject.Name & ".DeclarationDict.txt"
+      ShowTableRecInfo .Count & " records were exported to " & CurrentProject.Name & ".DeclarationDict.txt"
+   End With
 End Sub
 
 Private Sub LoadFromFile()
-   m_DeclarationDict.LoadFromFile CurrentProject.Path & "\DeclarationDict.txt"
-   ShowTableRecInfo m_DeclarationDict.Count & " records were imported from DeclarationDict.txt"
+   With ActiveDeclarationDict
+      .LoadFromFile CurrentProject.Path & "\" & CurrentProject.Name & ".DeclarationDict.txt"
+      ShowTableRecInfo .Count & " records were imported from " & CurrentProject.Name & ".DeclarationDict.txt"
+   End With
    RequeryDictData
 End Sub

@@ -1,0 +1,5 @@
+﻿CREATE TABLE [USysAPI] (
+  [ProcName] VARCHAR (255) CONSTRAINT [PrimaryKey] PRIMARY KEY UNIQUE NOT NULL,
+  [Description] LONGTEXT,
+  [OrderPos] BYTE
+)

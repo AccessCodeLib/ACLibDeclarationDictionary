@@ -1,0 +1,39 @@
+﻿<?xml version="1.0"?>
+<dataroot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <USysAPI>
+    <ProcName>StartAddIn()</ProcName>
+    <Description>&lt;div&gt;Default start of add-in ... open add-in form&lt;/div&gt;</Description>
+    <OrderPos>1</OrderPos>
+  </USysAPI>
+  <USysAPI>
+    <ProcName>RunVcsCheck(Optional ByVal OpenDialogToFixLettercase As Boolean = False)</ProcName>
+    <Description>&lt;div&gt;&lt;font size=2&gt;Compare lettercase from CurrentVbProject with saved (table/file) dictionary items&lt;/font&gt;&lt;/div&gt;
+
+&lt;div&gt;&lt;font size=2&gt;&amp;nbsp;&lt;/font&gt;&lt;/div&gt;
+
+&lt;div&gt;&lt;font size=2&gt;&lt;strong&gt;Parameters&lt;/strong&gt;&lt;/font&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+
+&lt;div&gt;&lt;font size=2&gt;OpenDialogToFixLettercase - (Boolean) - Open dialog to fix lettercase&lt;/font&gt;&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;div&gt;&lt;font size=2&gt;&amp;nbsp;&lt;/font&gt;&lt;/div&gt;
+
+&lt;div&gt;&lt;font size=2&gt;&lt;strong&gt;Returns&lt;/strong&gt;&lt;/font&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+ &lt;ul&gt;
+  &lt;li&gt;&lt;font size=2&gt;Boolean (True) ... if DiffCount = 0&lt;/font&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;font size=2&gt;String ... if DiffCount &amp;gt; 0 =&amp;gt; &amp;quot;Failed: &amp;lt;lettercase info&amp;gt;&amp;quot;&lt;/font&gt;&lt;/li&gt;
+ &lt;/ul&gt;
+&lt;/ul&gt;</Description>
+    <OrderPos>2</OrderPos>
+  </USysAPI>
+  <USysAPI>
+    <ProcName>RunVcsCheckDialog()</ProcName>
+    <Description>&lt;div&gt;Equal to &lt;b&gt;RunVcsCheck(True)&lt;/b&gt;&lt;/div&gt;</Description>
+    <OrderPos>3</OrderPos>
+  </USysAPI>
+</dataroot>
