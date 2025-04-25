@@ -18,7 +18,7 @@ Option Explicit
 Option Private Module
 
 'Version number
-Private Const APPLICATION_VERSION As String = "0.4.0.250423"
+Private Const APPLICATION_VERSION As String = "0.4.1.250425"
 
 Private Const APPLICATION_NAME As String = "ACLib Declaration Dictionary"
 Private Const APPLICATION_FULLNAME As String = "Access-CodeLib - Declaration Dictionary"
