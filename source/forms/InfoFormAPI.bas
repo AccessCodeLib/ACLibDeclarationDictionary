@@ -21,9 +21,9 @@ Begin Form
     Width =9072
     DatasheetFontHeight =11
     ItemSuffix =4
-    Left =9915
+    Left =7620
     Top =3045
-    Right =23070
+    Right =20775
     Bottom =14775
     RecSrcDt = Begin
         0x9487851a5859e640
@@ -90,7 +90,7 @@ Begin Form
         End
         Begin Section
             CanGrow = NotDefault
-            Height =4830
+            Height =6804
             Name ="Detail"
             AlternateBackThemeColorIndex =1
             AlternateBackShade =95.0
@@ -99,14 +99,14 @@ Begin Form
                 Begin Subform
                     OverlapFlags =85
                     Width =9072
-                    Height =4830
+                    Height =6804
                     Name ="InfoReportAPI"
                     SourceObject ="Report.InfoReportAPI"
                     HorizontalAnchor =2
                     VerticalAnchor =2
 
                     LayoutCachedWidth =9072
-                    LayoutCachedHeight =4830
+                    LayoutCachedHeight =6804
                 End
             End
         End

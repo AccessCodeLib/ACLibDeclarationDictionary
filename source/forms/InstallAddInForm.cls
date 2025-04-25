@@ -14,6 +14,10 @@ Private Property Get Configuration() As AddInConfiguration
    Set Configuration = m_Configuration
 End Property
 
+Private Sub cmdAPI_Click()
+   DoCmd.OpenForm "InfoFormAPI"
+End Sub
+
 Private Sub Form_Load()
 
    With CurrentApplication

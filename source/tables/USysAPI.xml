@@ -23,7 +23,27 @@
   &lt;li&gt;&lt;font size=2&gt;Boolean (True) ... if DiffCount = 0&lt;/font&gt;&lt;/li&gt;
   &lt;li&gt;&lt;font size=2&gt;String ... if DiffCount &amp;gt; 0 =&amp;gt; &amp;quot;Failed: &amp;lt;lettercase info&amp;gt;&amp;quot;&lt;/font&gt;&lt;/li&gt;
  &lt;/ul&gt;
-&lt;/ul&gt;</Description>
+&lt;/ul&gt;
+
+&lt;div&gt;&amp;nbsp;&lt;/div&gt;
+
+&lt;div&gt;&lt;font size=2&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/font&gt;&lt;/div&gt;
+
+&lt;div&gt;&lt;font face="Courier New" size=1&gt;Dim Result As Variant&lt;/font&gt;&lt;/div&gt;
+
+&lt;div&gt;&lt;font face="Courier New" size=1&gt;Result = Application.Run(Environ(&amp;quot;appdata&amp;quot;) &amp;amp; _&lt;/font&gt;&lt;/div&gt;
+
+&lt;div&gt;&lt;font face="Courier New" size=1&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;quot;\Microsoft\AddIns\ACLibDeclarationDict.RunVcsCheck&amp;quot;, True)&lt;/font&gt;&lt;/div&gt;
+
+&lt;div&gt;&lt;font face="Courier New" size=1&gt;If Result = True Then&lt;/font&gt;&lt;/div&gt;
+
+&lt;div&gt;&lt;font face="Courier New" size=1&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Debug.Print &amp;quot;No problems with letter case&amp;quot;&lt;/font&gt;&lt;/div&gt;
+
+&lt;div&gt;&lt;font face="Courier New" size=1&gt;Else&lt;/font&gt;&lt;/div&gt;
+
+&lt;div&gt;&lt;font face="Courier New" size=1&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Debug.Print Result&lt;/font&gt;&lt;/div&gt;
+
+&lt;div&gt;&lt;font face="Courier New" size=1&gt;End If&lt;/font&gt;&lt;/div&gt;</Description>
     <OrderPos>2</OrderPos>
   </USysAPI>
   <USysAPI>
