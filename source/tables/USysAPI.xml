@@ -1,11 +1,6 @@
 ﻿<?xml version="1.0"?>
 <dataroot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <USysAPI>
-    <ProcName>StartAddIn()</ProcName>
-    <Description>&lt;div&gt;Default start of add-in ... open add-in form&lt;/div&gt;</Description>
-    <OrderPos>1</OrderPos>
-  </USysAPI>
-  <USysAPI>
     <ProcName>RunVcsCheck(Optional ByVal OpenDialogToFixLettercase As Boolean = False)</ProcName>
     <Description>&lt;div&gt;&lt;font size=2&gt;Compare lettercase from CurrentVbProject with saved (table/file) dictionary items&lt;/font&gt;&lt;/div&gt;
 
@@ -35,5 +30,10 @@
     <ProcName>RunVcsCheckDialog()</ProcName>
     <Description>&lt;div&gt;Equal to &lt;b&gt;RunVcsCheck(True)&lt;/b&gt;&lt;/div&gt;</Description>
     <OrderPos>3</OrderPos>
+  </USysAPI>
+  <USysAPI>
+    <ProcName>StartAddIn()</ProcName>
+    <Description>&lt;div&gt;Default start of add-in ... open add-in form&lt;/div&gt;</Description>
+    <OrderPos>1</OrderPos>
   </USysAPI>
 </dataroot>

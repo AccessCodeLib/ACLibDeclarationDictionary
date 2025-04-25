@@ -16,9 +16,9 @@ Begin Form
     Width =10148
     DatasheetFontHeight =11
     ItemSuffix =81
-    Left =9915
+    Left =7620
     Top =3045
-    Right =28425
+    Right =20775
     Bottom =14775
     OnUnload ="[Event Procedure]"
     RecSrcDt = Begin
@@ -196,13 +196,13 @@ Begin Form
                             OverlapFlags =215
                             Left =120
                             Top =60
-                            Width =765
+                            Width =840
                             Height =345
-                            Name ="Label3"
+                            Name ="labFilterSelection"
                             Caption ="Show"
                             LayoutCachedLeft =120
                             LayoutCachedTop =60
-                            LayoutCachedWidth =885
+                            LayoutCachedWidth =960
                             LayoutCachedHeight =405
                         End
                         Begin OptionButton

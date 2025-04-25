@@ -47,8 +47,22 @@ Private Sub cmdSaveToTable_Click()
 End Sub
 
 Private Sub filtDiff_AfterUpdate()
+   If m_RunAsAPI Then
+      If Me.filtDiff.Value = 0 Then ' full list
+         If TableWordCount < m_DeclarationDict.Count Then
+            FillWordTableFromDict False
+         End If
+      End If
+   End If
    RequeryDictData
 End Sub
+
+Private Function TableWordCount() As Long
+   With CodeDb.OpenRecordset("select Count(*) from tabWords")
+      TableWordCount = Nz(.Fields(0), 0)
+      .Close
+   End With
+End Function
 
 Private Sub filtWord_AfterUpdate()
    RequeryDictData
@@ -71,7 +85,7 @@ End Sub
 Private Sub SetApiDialogMode()
    m_RunAsAPI = True
    Set m_DeclarationDict = GetDeclarationDictTransferReference
-   FillWordTableFromDict
+   FillWordTableFromDict True
 End Sub
 
 Private Sub Form_Timer()
@@ -148,7 +162,7 @@ Private Sub ogViewMode_AfterUpdate()
    RequeryDictData
 End Sub
 
-Private Sub FillWordTableFromDict()
+Private Sub FillWordTableFromDict(Optional ByVal DiffWordsOnly As Boolean = False)
 
    CodeDb.Execute "delete from tabWords"
 
@@ -156,7 +170,11 @@ Private Sub FillWordTableFromDict()
    Dim DictKey As String
    Dim WordsDict As Dictionary
 
-   Set WordsDict = m_DeclarationDict.WordsDict
+   If DiffWordsOnly Then
+      Set WordsDict = m_DeclarationDict.ToDict(False)
+   Else
+      Set WordsDict = m_DeclarationDict.WordsDict
+   End If
 
    If m_InsertRecordset Is Nothing Then
       Set m_InsertRecordset = CodeDb.OpenRecordset("tabWords", dbOpenDynaset, dbAppendOnly)
