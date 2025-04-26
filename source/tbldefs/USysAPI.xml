@@ -29,6 +29,7 @@
         <od:tableProperty name="ReadOnlyWhenDisconnected" type="1" value="0"></od:tableProperty>
         <od:tableProperty name="DatasheetGridlinesThemeColorIndex" type="4" value="3"></od:tableProperty>
         <od:tableProperty name="DatasheetForeThemeColorIndex" type="4" value="0"></od:tableProperty>
+        <od:tableProperty name="RowHeight" type="3" value="1320"></od:tableProperty>
       </xsd:appinfo>
     </xsd:annotation>
     <xsd:complexType>

@@ -10,19 +10,37 @@
   </xsd:element>
   <xsd:element name="USysRegInfo">
     <xsd:annotation>
-      <xsd:appinfo></xsd:appinfo>
+      <xsd:appinfo>
+        <od:tableProperty name="Orientation" type="2" value="0"></od:tableProperty>
+      </xsd:appinfo>
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element name="Subkey" minOccurs="0" od:jetType="text" od:sqlSType="nvarchar">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <od:fieldProperty name="Required" type="1" value="0"></od:fieldProperty>
+            </xsd:appinfo>
+          </xsd:annotation>
           <xsd:simpleType>
             <xsd:restriction base="xsd:string">
               <xsd:maxLength value="255"></xsd:maxLength>
             </xsd:restriction>
           </xsd:simpleType>
         </xsd:element>
-        <xsd:element name="Type" minOccurs="0" od:jetType="longinteger" od:sqlSType="int" type="xsd:int"></xsd:element>
+        <xsd:element name="Type" minOccurs="0" od:jetType="longinteger" od:sqlSType="int" type="xsd:int">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <od:fieldProperty name="Required" type="1" value="0"></od:fieldProperty>
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:element>
         <xsd:element name="ValName" minOccurs="0" od:jetType="text" od:sqlSType="nvarchar">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <od:fieldProperty name="Required" type="1" value="0"></od:fieldProperty>
+            </xsd:appinfo>
+          </xsd:annotation>
           <xsd:simpleType>
             <xsd:restriction base="xsd:string">
               <xsd:maxLength value="255"></xsd:maxLength>
@@ -30,6 +48,11 @@
           </xsd:simpleType>
         </xsd:element>
         <xsd:element name="Value" minOccurs="0" od:jetType="text" od:sqlSType="nvarchar">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <od:fieldProperty name="Required" type="1" value="0"></od:fieldProperty>
+            </xsd:appinfo>
+          </xsd:annotation>
           <xsd:simpleType>
             <xsd:restriction base="xsd:string">
               <xsd:maxLength value="255"></xsd:maxLength>

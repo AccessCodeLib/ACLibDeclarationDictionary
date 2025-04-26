@@ -3,6 +3,9 @@ Option Compare Text
 Option Explicit
 Option Private Module
 
+Public Const DeclDictAddInName As String = "ACLib Declaration Dictionary"
+Public Const DeclDictVersion As String = "0.4.2"
+
 Private m_DeclarationDict As DeclarationDict
 
 Public Function GetDeclarationDictTransferReference() As DeclarationDict

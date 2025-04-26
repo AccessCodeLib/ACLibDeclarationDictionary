@@ -123,6 +123,7 @@ Begin Report
                     LayoutCachedHeight =712
                 End
                 Begin TextBox
+                    CanGrow = NotDefault
                     OldBorderStyle =0
                     IMESentenceMode =3
                     Left =113

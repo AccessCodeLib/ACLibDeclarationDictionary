@@ -179,20 +179,15 @@ Private Sub ChangeLetterCase()
 
     If Not IsDifferentLetterCase(ChangeFrom, ChangeTo) Then
         If IsDifferentLetterCase(Me.txtWord.Value, ChangeTo) Then
-            SetCurrentLetterCaseAsDefault ChangeTo
+            ActiveDeclarationDict.ChangeKeyLetterCase ChangeTo
             DeleteWordRecord ChangeTo
             RefreshDiffData
         End If
         Exit Sub
     End If
 
-    With New CodeModulGenerator
-        .CreateCodemodule vbext_ct_StdModule
-        .InsertDeclarationLine "Private " & ChangeTo
-        .RemoveCodemodule
-    End With
+    ActiveDeclarationDict.FixLetterCase ChangeTo
 
-    ActiveDeclarationDict.AddWord ChangeTo
     With Me.lbDictData
         .Value = Null
         Set .Recordset = m_WordListRecordset
@@ -214,24 +209,5 @@ Private Sub RefreshDiffData()
         End With
         FillWordVariationsList
     End If
-
-End Sub
-
-Private Sub SetCurrentLetterCaseAsDefault(ByVal ChangeTo As String)
-
-   ActiveDeclarationDict.ChangeKeyLetterCase ChangeTo
-
-   Dim UpdateSql As String
-   Dim VariationsString As String
-   VariationsString = Join(m_DeclarationDict.GetWordVariations(ChangeTo, True), "|")
-   With SqlTools
-      UpdateSql = "update tabWords set Word = " & .TextToSqlText(ChangeTo) & ", Variations=" & .TextToSqlText(VariationsString) & " where Word = " & .TextToSqlText(ChangeTo)
-   End With
-   CodeDb.Execute UpdateSql, dbFailOnError
-
-   With Me.lbDictData
-      .Requery
-      .Value = ChangeTo
-   End With
 
 End Sub

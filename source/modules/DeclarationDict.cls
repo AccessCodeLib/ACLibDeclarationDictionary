@@ -453,6 +453,18 @@ Public Sub ChangeKeyLetterCase(ByVal WordWithNewLetterCase As String)
 
 End Sub
 
+Public Sub FixLetterCase(ByVal WordWithNewLetterCase As String)
+
+    With New CodeModulGenerator
+        .CreateCodemodule vbext_ct_StdModule
+        .InsertDeclarationLine "Private " & WordWithNewLetterCase
+        .RemoveCodemodule
+    End With
+
+    AddWord WordWithNewLetterCase
+
+End Sub
+
 Public Function LoadFromTable(ByVal TableName As String, Optional ByRef ErrorMsg As String) As Boolean
 
    Dim db As DAO.Database
@@ -500,6 +512,27 @@ Public Sub SaveToTable(ByVal TableName As String)
    Next
 
 End Sub
+
+Public Function TableDefExists(ByVal TableDefName As String, _
+                      Optional ByVal DbRef As DAO.Database = Nothing) As Boolean
+
+   Dim rst As DAO.Recordset
+   Dim FilterString As String
+   Dim ObjectTypeFilterString As String
+
+   If DbRef Is Nothing Then
+      Set DbRef = CodeDb
+   End If
+
+   FilterString = "where Name = '" & Replace(TableDefName, "'", "''") & "'" & _
+                  " and Type IN (1, 4, 6)"
+
+   Set rst = DbRef.OpenRecordset("select Name from MSysObjects " & FilterString, dbOpenForwardOnly, dbReadOnly)
+   TableDefExists = Not rst.EOF
+   rst.Close
+
+End Function
+
 
 Public Function LoadFromFile(ByVal FullFileName As String, Optional ByRef ErrorMsg As String) As Boolean
 

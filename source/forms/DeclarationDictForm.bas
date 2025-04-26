@@ -266,10 +266,10 @@ Begin Form
                     RowSourceTypeInt =1
                     OverlapFlags =85
                     IMESentenceMode =3
-                    Left =5670
-                    Top =1905
+                    Left =5674
+                    Top =1911
                     Width =4380
-                    Height =1350
+                    Height =1354
                     TabIndex =8
                     ForeColor =0
                     Name ="lbVariations"
@@ -285,10 +285,10 @@ Begin Form
                     AllowValueListEdits =0
                     InheritValueList =0
 
-                    LayoutCachedLeft =5670
-                    LayoutCachedTop =1905
-                    LayoutCachedWidth =10050
-                    LayoutCachedHeight =3255
+                    LayoutCachedLeft =5674
+                    LayoutCachedTop =1911
+                    LayoutCachedWidth =10054
+                    LayoutCachedHeight =3265
                     RowStart =4
                     RowEnd =4
                     ColumnEnd =1
@@ -302,10 +302,10 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =5670
-                    Top =570
+                    Left =5674
+                    Top =574
                     Width =4380
-                    Height =315
+                    Height =317
                     FontWeight =700
                     TabIndex =6
                     Name ="txtWord"
@@ -321,10 +321,10 @@ Begin Form
                     GroupTable =1
                     HorizontalAnchor =1
 
-                    LayoutCachedLeft =5670
-                    LayoutCachedTop =570
-                    LayoutCachedWidth =10050
-                    LayoutCachedHeight =885
+                    LayoutCachedLeft =5674
+                    LayoutCachedTop =574
+                    LayoutCachedWidth =10054
+                    LayoutCachedHeight =891
                     ColumnEnd =1
                     LayoutGroup =1
                     ConditionalFormat14 = Begin
@@ -420,8 +420,8 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =5670
-                    Top =1245
+                    Left =5674
+                    Top =1251
                     Width =4380
                     Height =300
                     TabIndex =7
@@ -444,10 +444,10 @@ Begin Form
                     GridlineWidthBottom =0
                     HorizontalAnchor =1
 
-                    LayoutCachedLeft =5670
-                    LayoutCachedTop =1245
-                    LayoutCachedWidth =10050
-                    LayoutCachedHeight =1545
+                    LayoutCachedLeft =5674
+                    LayoutCachedTop =1251
+                    LayoutCachedWidth =10054
+                    LayoutCachedHeight =1551
                     RowStart =2
                     RowEnd =2
                     ColumnEnd =1
@@ -466,8 +466,8 @@ Begin Form
                 Begin Label
                     OverlapFlags =85
                     TextAlign =1
-                    Left =5670
-                    Top =945
+                    Left =5674
+                    Top =951
                     Width =4380
                     Height =300
                     Name ="Label19"
@@ -475,10 +475,10 @@ Begin Form
                     GroupTable =1
                     BottomPadding =0
                     HorizontalAnchor =1
-                    LayoutCachedLeft =5670
-                    LayoutCachedTop =945
-                    LayoutCachedWidth =10050
-                    LayoutCachedHeight =1245
+                    LayoutCachedLeft =5674
+                    LayoutCachedTop =951
+                    LayoutCachedWidth =10054
+                    LayoutCachedHeight =1251
                     RowStart =1
                     RowEnd =1
                     ColumnEnd =1
@@ -488,8 +488,8 @@ Begin Form
                 Begin Label
                     OverlapFlags =85
                     TextAlign =1
-                    Left =5670
-                    Top =1605
+                    Left =5674
+                    Top =1611
                     Width =4380
                     Height =300
                     Name ="Label20"
@@ -497,10 +497,10 @@ Begin Form
                     GroupTable =1
                     BottomPadding =0
                     HorizontalAnchor =1
-                    LayoutCachedLeft =5670
-                    LayoutCachedTop =1605
-                    LayoutCachedWidth =10050
-                    LayoutCachedHeight =1905
+                    LayoutCachedLeft =5674
+                    LayoutCachedTop =1611
+                    LayoutCachedWidth =10054
+                    LayoutCachedHeight =1911
                     RowStart =3
                     RowEnd =3
                     ColumnEnd =1
@@ -513,10 +513,10 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =5670
-                    Top =3615
-                    Width =3405
-                    Height =345
+                    Left =5674
+                    Top =3626
+                    Width =3403
+                    Height =343
                     TabIndex =9
                     Name ="txtSelectedLetterCase"
                     ControlSource ="=[lbVariations]"
@@ -532,10 +532,10 @@ Begin Form
                     TopPadding =0
                     HorizontalAnchor =1
 
-                    LayoutCachedLeft =5670
-                    LayoutCachedTop =3615
-                    LayoutCachedWidth =9075
-                    LayoutCachedHeight =3960
+                    LayoutCachedLeft =5674
+                    LayoutCachedTop =3626
+                    LayoutCachedWidth =9077
+                    LayoutCachedHeight =3969
                     RowStart =6
                     RowEnd =6
                     LayoutGroup =1
@@ -549,8 +549,8 @@ Begin Form
                 Begin Label
                     OverlapFlags =85
                     TextAlign =1
-                    Left =5670
-                    Top =3285
+                    Left =5674
+                    Top =3291
                     Width =4380
                     Height =300
                     Name ="Label45"
@@ -558,10 +558,10 @@ Begin Form
                     GroupTable =1
                     TopPadding =0
                     HorizontalAnchor =1
-                    LayoutCachedLeft =5670
-                    LayoutCachedTop =3285
-                    LayoutCachedWidth =10050
-                    LayoutCachedHeight =3585
+                    LayoutCachedLeft =5674
+                    LayoutCachedTop =3291
+                    LayoutCachedWidth =10054
+                    LayoutCachedHeight =3591
                     RowStart =5
                     RowEnd =5
                     ColumnEnd =1
@@ -571,10 +571,10 @@ Begin Form
                 Begin CommandButton
                     Enabled = NotDefault
                     OverlapFlags =85
-                    Left =9135
-                    Top =3615
-                    Width =915
-                    Height =345
+                    Left =9137
+                    Top =3626
+                    Width =917
+                    Height =343
                     TabIndex =10
                     Name ="cmdChangeLetterCase"
                     Caption ="Commit"
@@ -583,10 +583,10 @@ Begin Form
                     TopPadding =0
                     HorizontalAnchor =1
 
-                    LayoutCachedLeft =9135
-                    LayoutCachedTop =3615
-                    LayoutCachedWidth =10050
-                    LayoutCachedHeight =3960
+                    LayoutCachedLeft =9137
+                    LayoutCachedTop =3626
+                    LayoutCachedWidth =10054
+                    LayoutCachedHeight =3969
                     RowStart =6
                     RowEnd =6
                     ColumnStart =1
@@ -604,9 +604,9 @@ Begin Form
                 End
                 Begin CommandButton
                     OverlapFlags =85
-                    Left =3750
-                    Top =5445
-                    Width =1695
+                    Left =3754
+                    Top =5443
+                    Width =1697
                     Height =300
                     TabIndex =13
                     Name ="cmdSaveToTable"
@@ -614,10 +614,10 @@ Begin Form
                     OnClick ="[Event Procedure]"
                     GroupTable =2
 
-                    LayoutCachedLeft =3750
-                    LayoutCachedTop =5445
-                    LayoutCachedWidth =5445
-                    LayoutCachedHeight =5745
+                    LayoutCachedLeft =3754
+                    LayoutCachedTop =5443
+                    LayoutCachedWidth =5451
+                    LayoutCachedHeight =5743
                     ColumnStart =2
                     ColumnEnd =2
                     LayoutGroup =2
@@ -633,9 +633,9 @@ Begin Form
                 End
                 Begin CommandButton
                     OverlapFlags =85
-                    Left =1995
-                    Top =5445
-                    Width =1695
+                    Left =1997
+                    Top =5443
+                    Width =1697
                     Height =300
                     TabIndex =12
                     Name ="cmdLoadFromTable"
@@ -643,10 +643,10 @@ Begin Form
                     OnClick ="[Event Procedure]"
                     GroupTable =2
 
-                    LayoutCachedLeft =1995
-                    LayoutCachedTop =5445
-                    LayoutCachedWidth =3690
-                    LayoutCachedHeight =5745
+                    LayoutCachedLeft =1997
+                    LayoutCachedTop =5443
+                    LayoutCachedWidth =3694
+                    LayoutCachedHeight =5743
                     ColumnStart =1
                     ColumnEnd =1
                     LayoutGroup =2
@@ -664,7 +664,7 @@ Begin Form
                             OverlapFlags =85
                             TextAlign =1
                             Left =60
-                            Top =5445
+                            Top =5443
                             Width =1875
                             Height =300
                             FontSize =10
@@ -672,9 +672,9 @@ Begin Form
                             Caption ="Table: USysDeclDict"
                             GroupTable =2
                             LayoutCachedLeft =60
-                            LayoutCachedTop =5445
+                            LayoutCachedTop =5443
                             LayoutCachedWidth =1935
-                            LayoutCachedHeight =5745
+                            LayoutCachedHeight =5743
                             LayoutGroup =2
                             GroupTable =2
                         End
@@ -771,19 +771,19 @@ Begin Form
                 End
                 Begin CommandButton
                     OverlapFlags =85
-                    Left =3750
-                    Top =5805
-                    Width =1695
-                    Height =315
+                    Left =3754
+                    Top =5803
+                    Width =1697
+                    Height =317
                     TabIndex =15
                     Name ="cmdSaveToFile"
                     Caption ="Export to file"
                     OnClick ="[Event Procedure]"
                     GroupTable =2
 
-                    LayoutCachedLeft =3750
-                    LayoutCachedTop =5805
-                    LayoutCachedWidth =5445
+                    LayoutCachedLeft =3754
+                    LayoutCachedTop =5803
+                    LayoutCachedWidth =5451
                     LayoutCachedHeight =6120
                     RowStart =1
                     RowEnd =1
@@ -802,19 +802,19 @@ Begin Form
                 End
                 Begin CommandButton
                     OverlapFlags =85
-                    Left =1995
-                    Top =5805
-                    Width =1695
-                    Height =315
+                    Left =1997
+                    Top =5803
+                    Width =1697
+                    Height =317
                     TabIndex =14
                     Name ="cmdLoadFromFile"
                     Caption ="Load from file"
                     OnClick ="[Event Procedure]"
                     GroupTable =2
 
-                    LayoutCachedLeft =1995
-                    LayoutCachedTop =5805
-                    LayoutCachedWidth =3690
+                    LayoutCachedLeft =1997
+                    LayoutCachedTop =5803
+                    LayoutCachedWidth =3694
                     LayoutCachedHeight =6120
                     RowStart =1
                     RowEnd =1
@@ -835,15 +835,15 @@ Begin Form
                             OverlapFlags =85
                             TextAlign =1
                             Left =60
-                            Top =5805
+                            Top =5803
                             Width =1875
-                            Height =315
+                            Height =317
                             FontSize =10
                             Name ="Bezeichnungsfeld71"
                             Caption ="File: DeclarationDict"
                             GroupTable =2
                             LayoutCachedLeft =60
-                            LayoutCachedTop =5805
+                            LayoutCachedTop =5803
                             LayoutCachedWidth =1935
                             LayoutCachedHeight =6120
                             RowStart =1
