@@ -57,7 +57,7 @@ Public Sub ImportCode_InsertCodeLine_CheckKeys(ByVal Code As String, ByVal Expec
    Dim Actual As String
    
    m_DeclDict.ImportCode Code
-   Actual = Join(m_DeclDict.Dict.Keys, "|")
+   Actual = Join(m_DeclDict.WordsDict.Keys, "|")
    
    Assert.That Actual, Iz.EqualTo(Expected)
    
@@ -72,7 +72,7 @@ Public Sub ImportCode_InsertCodeLines_CheckKeys(ByVal Code As String, ByVal Expe
    Dim Actual As String
       
    m_DeclDict.ImportCode Code
-   Actual = Join(m_DeclDict.Dict.Keys, "|")
+   Actual = Join(m_DeclDict.WordsDict.Keys, "|")
    
    Assert.That Actual, Iz.EqualTo(Expected)
    
@@ -93,7 +93,7 @@ Public Sub ImportCode_API_CheckKeys(ByVal Code As String, ByVal Expected As Stri
 '   Actual = RegEx.Replace(Code, "$1 $2(")
    
    m_DeclDict.ImportCode Code
-   Actual = Join(m_DeclDict.Dict.Keys, "|")
+   Actual = Join(m_DeclDict.WordsDict.Keys, "|")
    
    Assert.That Actual, Iz.EqualTo(Expected)
    
@@ -114,7 +114,7 @@ Public Sub ImportCode_EnumCode_CheckKeys()
    Const Expected As String = "xyz|en1|en2|x|y"
 
    m_DeclDict.ImportCode Code
-   Actual = Join(m_DeclDict.Dict.Keys, "|")
+   Actual = Join(m_DeclDict.WordsDict.Keys, "|")
    
    Assert.That Actual, Iz.EqualTo(Expected)
 
@@ -135,7 +135,7 @@ Public Sub ImportCode_TypeCode_CheckKeys()
    Const Expected As String = "xyz|F1|F2|x|y"
 
    m_DeclDict.ImportCode Code
-   Actual = Join(m_DeclDict.Dict.Keys, "|")
+   Actual = Join(m_DeclDict.WordsDict.Keys, "|")
    
    Assert.That Actual, Iz.EqualTo(Expected)
 
@@ -169,7 +169,7 @@ Public Sub ImportClassCodeModule_CheckKeysExists()
    
    m_DeclDict.ImportVBComponent CurrentVbProject.VBComponents("DeclarationDictTestCodemodule")
    
-   Set ActualDict = m_DeclDict.Dict
+   Set ActualDict = m_DeclDict.WordsDict
 
    Assert.That ActualDict.Count, Iz.EqualTo(UBound(ExpectedKeys) + 1), "Count of items"
    
