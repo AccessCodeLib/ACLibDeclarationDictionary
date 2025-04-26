@@ -78,9 +78,9 @@ Public Function RunVcsCheck(Optional ByVal OpenDialogToFixLettercase As Boolean 
       If OpenDialogToFixLettercase Then
          If DiffCnt > 0 Then
             SetDeclarationDictTransferReference .Self
-            DoCmd.OpenForm "DeclarationDictForm", , , , , acDialog, "RunAsApiDialog"
+            DoCmd.OpenForm "DeclarationDictApiDialog", , , , , acDialog
             DiffCnt = .DiffCount
-            If DiffCnt = 0 Then '=> new comparison data
+            If DiffCnt = 0 Then
                StoreDictData = True
             End If
          End If
